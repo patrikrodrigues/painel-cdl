@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel do Lojista – Agente CDL IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cdl: {
+              bg: "#020617",
+              sidebar: "#020617",
+              surface: "#020617",
+              card: "#020617",
+              primary: "#0ea5e9",
+              primarySoft: "#0ea5e926",
+              success: "#22c55e",
+              danger: "#ef4444",
+              warning: "#f59e0b",
+              border: "#1e293b"
+            }
+          },
+          boxShadow: {
+            "card-soft": "0 18px 45px rgba(15,23,42,0.65)"
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(148,163,184,0.8);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-track { background-color: transparent; }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-60 bg-slate-950 border-r border-slate-900 flex flex-col">
+      <div class="h-16 flex items-center px-4 border-b border-slate-900">
+        <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
+          <span class="text-emerald-300 font-bold text-lg">R$</span>
+        </div>
+        <div class="ml-2">
+          <p class="text-xs text-slate-400 uppercase tracking-wide">Agente ROI</p>
+          <p class="text-sm font-semibold text-slate-50">Painel do Lojista</p>
+        </div>
+      </div>
+
+      <nav class="flex-1 px-2 py-4 space-y-1 text-sm">
+        <p class="px-2 text-[10px] tracking-[0.18em] text-slate-500 uppercase mb-1">
+          Operação automática
+        </p>
+        <a href="painel-cdl.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
+          <span class="w-5 text-slate-400">🏛️</span>
+          CDLs que já aderiram
+        </a>
+        <a href="painel-lojista.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-emerald-500/10 text-emerald-200 border border-emerald-400/40">
+          <span class="w-5">🛍️</span>
+          Meu Painel
+        </a>
+        <a href="#" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
+          <span class="w-5 text-slate-400">📄</span>
+          Lista de Devedores
+        </a>
+
+        <p class="px-2 mt-4 text-[10px] tracking-[0.18em] text-slate-500 uppercase mb-1">
+          Ação
+        </p>
+        <a href="#" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
+          <span class="w-5 text-slate-400">📲</span>
+          Quero isso na MINHA CDL
+        </a>
+      </nav>
+
+      <div class="border-t border-slate-900 px-3 py-3 text-xs text-slate-400">
+        <p class="flex items-center justify-between">
+          <span>Modo demonstração</span>
+          <span class="inline-flex items-center gap-1 text-emerald-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            ATIVO
+          </span>
+        </p>
+      </div>
+
+      <button class="mt-auto flex items-center gap-2 px-4 py-3 text-xs text-slate-400 hover:text-rose-300 hover:bg-slate-900/80">
+        <span class="w-4">⏻</span>
+        Sair
+      </button>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <div class="flex-1 flex flex-col">
+      <!-- HEADER GLOBAL COM MODAL -->
+      <header class="border-b border-slate-900 bg-slate-950/95 backdrop-blur z-30">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
+              <span class="text-emerald-300 font-bold text-lg">IA</span>
+            </div>
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                Agente de Cobrança da CDL
+              </p>
+              <p class="text-xs text-slate-200">
+                <span class="font-semibold text-slate-50">Seu concorrente já está recuperando dinheiro com IA.</span>
+                E você?
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex flex-col items-end text-[11px] text-slate-400">
+              <span>Lojistas que já pediram isso para a CDL:</span>
+              <span class="font-semibold text-emerald-300">
+                <span id="header-requests-counter">347</span> solicitações
+              </span>
+            </div>
+            <button
+              id="openDemandModal"
+              class="text-xs px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold hover:bg-emerald-400 transition"
+            >
+              Quero isso AGORA
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- MODAL -->
+      <div id="demandModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-40 hidden">
+        <div class="bg-slate-950 border border-slate-800 rounded-2xl max-w-md w-full mx-4 p-5 shadow-card-soft relative">
+          <button id="closeDemandModal" class="absolute right-3 top-3 text-slate-500 hover:text-slate-200 text-lg">×</button>
+          <h2 class="text-sm font-semibold text-slate-50">Quero essa IA de cobrança na minha CDL</h2>
+          <p class="mt-1 text-xs text-slate-400">
+            Preencha e vamos te enviar um modelo de ofício pronto para você cobrar sua CDL.
+          </p>
+          <form class="mt-3 space-y-3 text-xs" onsubmit="event.preventDefault(); handleDemandForm();">
+            <div>
+              <label class="block text-slate-300 mb-1">Seu nome</label>
+              <input id="lojistaNome" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: João, do Lojão do Centro" />
+            </div>
+            <div>
+              <label class="block text-slate-300 mb-1">Seu WhatsApp</label>
+              <input id="lojistaTelefone" type="tel" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="DDD + número" />
+            </div>
+            <div>
+              <label class="block text-slate-300 mb-1">Nome da sua CDL</label>
+              <input id="lojistaCdl" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: CDL Guarapuava" />
+            </div>
+            <p class="text-[11px] text-slate-500">Usamos esses dados apenas para te enviar o modelo de ofício.</p>
+            <button type="submit" class="w-full mt-1 px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-xs hover:bg-emerald-400 transition">Gerar modelo de ofício</button>
+          </form>
+          <p id="demandModalFeedback" class="mt-2 text-[11px] text-emerald-300 hidden">Pronto! Use o botão de WhatsApp para enviar para sua CDL.</p>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <main class="flex-1 overflow-y-auto bg-slate-950">
+        <div class="max-w-7xl mx-auto px-5 py-5 space-y-4">
+          <!-- Cabeçalho do lojista -->
+          <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
+                Visão do lojista
+              </p>
+              <h1 class="text-xl font-semibold tracking-tight text-slate-50">
+                Lojão do Centro – Painel de Cobrança com IA
+              </h1>
+              <p class="text-xs text-slate-400">
+                Acompanhe como a IA da CDL está impactando a inadimplência e os recebimentos.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="text-xs px-3 py-2 rounded-lg bg-emerald-500 text-slate-950 font-semibold hover:bg-emerald-400">
+                Quero isso na MINHA CDL
+              </button>
+              <button class="text-xs px-3 py-2 rounded-lg border border-slate-700 text-slate-200 hover:border-emerald-400/60">
+                Exportar resumo
+              </button>
+            </div>
+          </section>
+
+          <!-- KPIs principais -->
+          <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <p class="text-[11px] uppercase tracking-wide text-slate-400">Valor recuperado neste período</p>
+              <p class="mt-1 text-xl font-semibold text-slate-50">R$ 380.000</p>
+              <p class="mt-0.5 text-[11px] text-emerald-300">↑ +22% vs. período anterior</p>
+              <p class="mt-3 text-[11px] text-slate-400">Acordos pagos e confirmados.</p>
+            </article>
+
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <p class="text-[11px] uppercase tracking-wide text-slate-400">Inadimplência atual</p>
+              <p class="mt-1 text-xl font-semibold text-slate-50">7,4%</p>
+              <p class="mt-0.5 text-[11px] text-emerald-300">↓ -2,1 p.p. nos últimos 90 dias</p>
+              <p class="mt-3 text-[11px] text-slate-400">Após início da operação com IA.</p>
+            </article>
+
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <p class="text-[11px] uppercase tracking-wide text-slate-400">ROI com IA</p>
+              <p class="mt-1 text-xl font-semibold text-slate-50">5,2x</p>
+              <p class="mt-0.5 text-[11px] text-emerald-300">↑ +0,8 vs. trimestre anterior</p>
+              <p class="mt-3 text-[11px] text-slate-400">R$ 5,20 recuperado para cada R$ 1 investido.</p>
+            </article>
+
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <p class="text-[11px] uppercase tracking-wide text-slate-400">Prazo médio de recebimento</p>
+              <p class="mt-1 text-xl font-semibold text-slate-50">24 dias</p>
+              <p class="mt-0.5 text-[11px] text-emerald-300">-6 dias desde o início da IA</p>
+              <p class="mt-3 text-[11px] text-slate-400">Dinheiro volta mais rápido para o caixa.</p>
+            </article>
+          </section>
+
+          <!-- CARD: O que você está perdendo -->
+          <article class="bg-slate-900/90 border border-rose-500/50 rounded-2xl p-4 shadow-card-soft">
+            <p class="text-[11px] uppercase tracking-wide text-rose-300">O que você está perdendo hoje</p>
+            <p class="mt-1 text-sm font-semibold text-slate-50">Estimativa dos últimos 12 meses sem uma operação de IA como esta.</p>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Valor estimado não recuperado</p>
+                <p class="mt-1 text-lg font-semibold text-rose-300">R$ 87.500</p>
+              </div>
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Clientes que poderiam estar pagando</p>
+                <p class="mt-1 text-lg font-semibold text-rose-300">47 clientes</p>
+              </div>
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Impacto no fluxo de caixa</p>
+                <p class="mt-1 text-lg font-semibold text-rose-300">3 funcionários / mês</p>
+              </div>
+            </div>
+            <p class="mt-3 text-[11px] text-rose-200">Cada mês sem essa IA é mais dinheiro parado em inadimplência.</p>
+          </article>
+
+          <!-- CARD: Comparador social -->
+          <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <div>
+                <p class="text-[11px] uppercase tracking-wide text-slate-400">Lojistas que já saíram na frente</p>
+                <h2 class="text-sm font-semibold text-slate-50">Enquanto você avalia, outros lojistas da sua região já estão recuperando com IA.</h2>
+              </div>
+              <div class="flex flex-wrap gap-2 text-[11px]">
+                <span class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/40">+R$ 2,1 milhões recuperados na região</span>
+                <span class="px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/40">Concorrente da rua X usa IA há 3 meses</span>
+              </div>
+            </div>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Lojistas que já aderiram</p>
+                <p class="mt-1 text-lg font-semibold text-emerald-300">36 lojas</p>
+              </div>
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Recuperado com IA em 12 meses</p>
+                <p class="mt-1 text-lg font-semibold text-emerald-300">R$ 2,1 milhões</p>
+              </div>
+              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
+                <p class="text-slate-400">Concorrência direta</p>
+                <p class="mt-1 text-lg font-semibold text-emerald-300">Rua X • Loja vizinha</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Gráficos -->
+          <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <h2 class="text-sm font-semibold text-slate-100">Evolução dos recebimentos com IA</h2>
+              <div class="mt-3 h-56"><canvas id="recebimentosChart"></canvas></div>
+            </article>
+            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+              <h2 class="text-sm font-semibold text-slate-100">Status dos acordos</h2>
+              <div class="mt-3 h-52"><canvas id="acordosChart"></canvas></div>
+            </article>
+          </section>
+
+          <!-- CARD: O que fazer agora -->
+          <section class="bg-slate-900/90 border border-emerald-400/40 rounded-2xl p-4 shadow-card-soft">
+            <p class="text-[11px] uppercase tracking-wide text-emerald-300">O que fazer agora</p>
+            <h2 class="mt-1 text-sm font-semibold text-slate-50">Não feche esta tela sem cobrar a sua CDL.</h2>
+            <ol class="mt-3 space-y-2 text-xs text-slate-200">
+              <li><span class="font-semibold text-emerald-300">PASSO 1:</span> Tire um print deste painel.</li>
+              <li><span class="font-semibold text-emerald-300">PASSO 2:</span> Mande no WhatsApp do seu gerente da CDL:<br />
+                <span class="block mt-1 text-[11px] text-slate-300 italic">"Gerente, lojistas de outras cidades já estão recuperando dinheiro com essa IA. Por que a gente ainda não tem? Quero isso na nossa CDL."</span>
+              </li>
+              <li><span class="font-semibold text-emerald-300">PASSO 3:</span> Me avise que enviou – tenho um modelo de ofício para você.</li>
+            </ol>
+          </section>
+
+          <!-- Tabela de cobranças -->
+          <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
+            <h2 class="text-sm font-semibold text-slate-100">Últimas cobranças enviadas</h2>
+            <div class="mt-3 overflow-x-auto">
+              <table class="min-w-full text-xs">
+                <thead>
+                  <tr class="border-b border-slate-800 text-slate-400">
+                    <th class="text-left py-2">Cliente</th>
+                    <th class="text-left py-2">Canal</th>
+                    <th class="text-right py-2">Valor</th>
+                    <th class="text-left py-2">Status</th>
+                    <th class="text-left py-2">Próxima ação</th>
+                   </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-slate-900"><td class="py-2">Maria da Silva</td><td>WhatsApp</td><td class="text-right">R$ 1.280</td><td class="text-emerald-300">Acordo em dia</td><td>Lembretes suaves</td></tr>
+                  <tr class="border-b border-slate-900"><td class="py-2">João Pereira</td><td>SMS</td><td class="text-right">R$ 840</td><td class="text-amber-300">Proposta enviada</td><td>Aguardar resposta</td></tr>
+                  <tr><td class="py-2">Ana Souza</td><td>WhatsApp</td><td class="text-right">R$ 2.150</td><td class="text-rose-300">Acordo quebrado</td><td>Nova proposta</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- BADGE FIXO + BOTÃO WHATSAPP -->
+  <div class="fixed bottom-4 left-4 z-30 bg-slate-950/95 border border-emerald-400/40 rounded-xl px-3 py-2 shadow-card-soft flex items-center gap-2 text-[11px]">
+    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+    <div class="flex flex-col">
+      <span class="text-slate-300">Lojistas que já solicitaram:</span>
+      <span class="font-semibold text-emerald-300"><span id="globalLojistasCounter">347</span> pedidos</span>
+    </div>
+  </div>
+
+  <a id="whatsButton" href="#" target="_blank" class="fixed bottom-4 right-4 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500 text-slate-950 text-xs font-semibold shadow-card-soft hover:bg-emerald-400 transition">
+    <span>📲</span> Enviar para meu WhatsApp
+  </a>
+
+  <script>
+    // Gráficos
+    document.addEventListener("DOMContentLoaded", function() {
+      const ctx1 = document.getElementById("recebimentosChart");
+      if(ctx1) new Chart(ctx1, { type:"line", data:{ labels:["Out","Nov","Dez","Jan","Fev","Mar"], datasets:[{ label:"Faturado", data:[320000,340000,360000,355000,370000,390000], borderColor:"#0ea5e9", fill:false, tension:0.35 },{ label:"Recebido (IA)", data:[240000,260000,278000,290000,305000,338000], borderColor:"#22c55e", backgroundColor:"rgba(34,197,94,0.2)", fill:true, tension:0.35 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ color:"#e5e7eb", font:{ size:11 } } } }, scales:{ y:{ ticks:{ callback:(v)=> "R$ "+(v/1000).toFixed(0)+"k" } } } } });
+      const ctx2 = document.getElementById("acordosChart");
+      if(ctx2) new Chart(ctx2, { type:"doughnut", data:{ labels:["Quitados","Em dia","Atrasados"], datasets:[{ data:[42,31,11], backgroundColor:["#22c55e","#f59e0b","#ef4444"], borderWidth:0 }] }, options:{ responsive:true, maintainAspectRatio:false, cutout:"65%", plugins:{ legend:{ position:"bottom", labels:{ color:"#e5e7eb", font:{ size:11 } } } } } });
+    });
+
+    // Modal
+    const modal = document.getElementById("demandModal");
+    const openBtn = document.getElementById("openDemandModal");
+    const closeBtn = document.getElementById("closeDemandModal");
+    if(openBtn && modal) openBtn.onclick = () => modal.classList.remove("hidden");
+    if(closeBtn && modal) closeBtn.onclick = () => modal.classList.add("hidden");
+    if(modal) modal.onclick = (e) => { if(e.target === modal) modal.classList.add("hidden"); };
+    function handleDemandForm() { document.getElementById("demandModalFeedback")?.classList.remove("hidden"); }
+
+    // Contador animado
+    (function() { const el = document.getElementById("globalLojistasCounter"); if(el) { let curr = 329; const interval = setInterval(() => { curr++; el.textContent = curr; if(curr >= 347) clearInterval(interval); }, 120); } })();
+
+    // WhatsApp
+    const btn = document.getElementById("whatsButton");
+    if(btn) btn.href = "https://wa.me/5551999999999?text=Presidente%2C%20quero%20essa%20IA%20de%20cobran%C3%A7a%20na%20nossa%20CDL.%20Olha%20o%20que%20lojistas%20de%20outras%20regi%C3%B5es%20j%C3%A1%20est%C3%A3o%20recuperando.%20Me%20chama%20para%20ver%20a%20demonstra%C3%A7%C3%A3o.";
+  </script>
+</body>
+</html>

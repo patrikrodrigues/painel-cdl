@@ -1,376 +1,151 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>CDLs que já saíram na frente com IA – Prova Social</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-thumb { background-color: rgba(148,163,184,0.8); border-radius: 999px; }
-    ::-webkit-scrollbar-track { background-color: transparent; }
-  </style>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cdl: {
-              background: "#020617",
-              surface: "#020617",
-              card: "#020617",
-              primary: "#0ea5e9",
-              primarySoft: "#0ea5e926",
-              accent: "#22c55e",
-              accentSoft: "#22c55e26",
-              warning: "#f59e0b",
-              danger: "#ef4444",
-              border: "#1e293b"
-            }
-          },
-          boxShadow: {
-            "card-soft": "0 18px 45px rgba(15,23,42,0.65)"
-          }
-        }
-      }
-    }
-  </script>
+<meta charset="UTF-8">
+<title>CDLs que já saíram na frente com IA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  * { font-family: 'Inter', sans-serif; }
+  body { background: #05050f; }
+  .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(139,92,246,0.15); }
+  .glass-hover:hover { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.35); transition: all 0.3s; }
+  .gradient-text { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .gradient-border { background: linear-gradient(135deg, #7c3aed, #2563eb); padding: 1px; border-radius: 16px; }
+  .gradient-btn { background: linear-gradient(135deg, #7c3aed, #2563eb); transition: all 0.3s; }
+  .gradient-btn:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 8px 25px rgba(124,58,237,0.4); }
+  .glow { box-shadow: 0 0 30px rgba(124,58,237,0.15); }
+  .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; color: #94a3b8; transition: all 0.2s; cursor: pointer; }
+  .sidebar-link:hover { background: rgba(139,92,246,0.1); color: #e2e8f0; }
+  .sidebar-link.active { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+  .kpi-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(139,92,246,0.12); border-radius: 16px; padding: 20px; transition: all 0.3s; }
+  .kpi-card:hover { border-color: rgba(139,92,246,0.35); box-shadow: 0 8px 32px rgba(124,58,237,0.12); transform: translateY(-2px); }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+  ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 999px; } ::-webkit-scrollbar-track { background: transparent; }
+  .counter-animate { animation: countUp 0.5s ease; }
+  @keyframes countUp { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .shine { position: relative; overflow: hidden; }
+  .shine::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent); transform: skewX(-20deg); animation: shine 4s infinite; }
+  @keyframes shine { 0% { left: -60%; } 100% { left: 160%; } }
+</style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-  <div class="min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="w-60 bg-slate-950 border-r border-slate-900 flex flex-col">
-      <div class="h-16 flex items-center px-4 border-b border-slate-900">
-        <div class="h-9 w-9 rounded-xl bg-cyan-500/10 border border-cyan-400/40 flex items-center justify-center">
-          <span class="text-cyan-300 font-bold text-lg">CDL</span>
+<body class="min-h-screen text-slate-100">
+<div class="min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside style="width:240px;min-width:240px;background:rgba(5,5,15,0.95);border-right:1px solid rgba(139,92,246,0.1);" class="flex flex-col backdrop-blur-xl">
+    <div style="height:64px;border-bottom:1px solid rgba(139,92,246,0.1);" class="flex items-center px-5 gap-3">
+      <div class="gradient-btn w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-sm">IA</div>
+      <div>
+        <p style="font-size:10px;letter-spacing:0.12em;" class="text-purple-400 uppercase">Agente CDL</p>
+        <p class="text-sm font-semibold text-white">Painel Premium</p>
+      </div>
+    </div>
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <p style="font-size:10px;letter-spacing:0.15em;" class="text-slate-600 uppercase px-3 mb-2">Navegação</p>
+      <a href="painel-cdl.html" class="sidebar-link active">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        CDLs que aderiram
+      </a>
+      <a href="painel-lojista.html" class="sidebar-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 11H4L5 9z"/></svg>
+        Painel do Lojista
+      </a>
+      <a href="painel-cliente.html" class="sidebar-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Perfil do Cliente
+      </a>
+    </nav>
+    <div style="border-top:1px solid rgba(139,92,246,0.1);" class="px-4 py-4">
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-slate-500">Modo demo</span>
+        <span class="flex items-center gap-1.5 text-emerald-400"><div class="pulse-dot"></div>ATIVO</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- HEADER -->
+    <header style="border-bottom:1px solid rgba(139,92,246,0.1);background:rgba(5,5,15,0.9);" class="backdrop-blur-xl z-30 sticky top-0">
+      <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+        <div>
+          <p style="font-size:10px;letter-spacing:0.15em;" class="text-purple-400 uppercase">Agente de Cobrança com IA</p>
+          <p class="text-sm text-slate-200"><span class="font-semibold text-white">Sua CDL pode ser a próxima referência no estado.</span> Veja quem já saiu na frente.</p>
         </div>
-        <div class="ml-2">
-          <p class="text-[10px] text-slate-400 uppercase tracking-wide">Prova Social</p>
-          <p class="text-sm font-semibold text-slate-50">CDLs que saíram na frente</p>
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex flex-col items-end text-xs text-slate-400">
+            <span>Lojistas que já pediram</span>
+            <span class="font-bold text-purple-300"><span id="header-counter">347</span> solicitações</span>
+          </div>
+          <button onclick="document.getElementById('modal').classList.remove('hidden')" class="gradient-btn text-white text-xs font-semibold px-4 py-2 rounded-xl whitespace-nowrap">
+            Quero isso na MINHA CDL
+          </button>
         </div>
       </div>
+    </header>
 
-      <nav class="flex-1 px-2 py-4 space-y-1 text-sm">
-        <p class="px-2 text-[10px] tracking-[0.18em] text-slate-500 uppercase mb-1">
-          Compare com sua CDL
-        </p>
-        <a href="painel-cdl.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-cyan-500/10 text-cyan-200 border border-cyan-400/40">
-          <span class="w-5 text-slate-400">🏛️</span>
-          CDLs que já aderiram
-        </a>
-        <a href="painel-lojista.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
-          <span class="w-5">🛍️</span>
-          Meu Painel
-        </a>
-        <a href="painel-cliente.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
-          <span class="w-5">👤</span>
-          Perfil do Cliente
-        </a>
-      </nav>
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto px-6 py-6 space-y-6 max-w-7xl mx-auto w-full">
 
-      <div class="border-t border-slate-900 px-3 py-3 text-xs text-slate-400">
-        <p class="flex items-center justify-between">
-          <span>Dados reais de CDLs parceiras</span>
-          <span class="inline-flex items-center gap-1 text-emerald-300">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            ATUALIZADO
-          </span>
-        </p>
-      </div>
-
-      <button class="mt-auto flex items-center gap-2 px-4 py-3 text-xs text-slate-400 hover:text-rose-300 hover:bg-slate-900/80">
-        <span class="w-4">⏻</span>
-        Sair
-      </button>
-    </aside>
-
-    <!-- Conteúdo principal -->
-    <div class="flex-1 flex flex-col">
-      <!-- HEADER GLOBAL COM MODAL -->
-      <header class="border-b border-slate-900 bg-slate-950/95 backdrop-blur z-30">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
-              <span class="text-emerald-300 font-bold text-lg">IA</span>
+      <!-- HERO BANNER -->
+      <section class="shine gradient-border glow">
+        <div style="background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(37,99,235,0.08),rgba(5,5,15,0.95));border-radius:15px;" class="px-6 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <p style="font-size:11px;letter-spacing:0.15em;" class="text-purple-400 uppercase mb-1">Dados reais · Verificados</p>
+            <h1 class="text-2xl font-bold gradient-text">CDLs que já saíram na frente com IA</h1>
+            <p class="text-xs text-slate-400 mt-1 max-w-lg">Enquanto sua CDL ainda usa discador e call center, essas já estão recuperando milhões com inteligência artificial.</p>
+          </div>
+          <div class="flex gap-3 shrink-0">
+            <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);" class="rounded-xl px-4 py-3 text-center">
+              <p style="font-size:10px;" class="text-slate-400">Lojistas satisfeitos</p>
+              <p class="text-xl font-bold text-purple-300">94%</p>
             </div>
-            <div>
-              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                Agente de Cobrança da CDL
-              </p>
-              <p class="text-xs text-slate-200">
-                <span class="font-semibold text-slate-50">Sua CDL pode ser a próxima referência no seu estado.</span>
-                Veja quem já saiu na frente.
-              </p>
+            <div style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);" class="rounded-xl px-4 py-3 text-center">
+              <p style="font-size:10px;" class="text-slate-400">Redução de custos</p>
+              <p class="text-xl font-bold text-blue-300">-62%</p>
             </div>
           </div>
-
-          <div class="flex items-center gap-3">
-            <div class="hidden sm:flex flex-col items-end text-[11px] text-slate-400">
-              <span>Lojistas que já pediram isso para a CDL:</span>
-              <span class="font-semibold text-emerald-300">
-                <span id="header-requests-counter">347</span> solicitações
-              </span>
-            </div>
-            <button
-              id="openDemandModal"
-              class="text-xs px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold hover:bg-emerald-400 transition"
-            >
-              Quero isso na MINHA CDL
-            </button>
-          </div>
         </div>
-      </header>
+      </section>
 
-      <!-- MODAL -->
-      <div id="demandModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-40 hidden">
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl max-w-md w-full mx-4 p-5 shadow-card-soft relative">
-          <button id="closeDemandModal" class="absolute right-3 top-3 text-slate-500 hover:text-slate-200 text-lg">×</button>
-          <h2 class="text-sm font-semibold text-slate-50">Quero essa IA de cobrança na minha CDL</h2>
-          <p class="mt-1 text-xs text-slate-400">
-            Preencha e vamos te enviar um modelo de ofício pronto para você cobrar sua CDL.
-          </p>
-          <form class="mt-3 space-y-3 text-xs" onsubmit="event.preventDefault(); handleDemandForm();">
-            <div>
-              <label class="block text-slate-300 mb-1">Seu nome</label>
-              <input id="lojistaNome" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: João, do Lojão do Centro" />
+      <!-- CDL CARDS -->
+      <section>
+        <h2 class="text-sm font-semibold text-slate-200 mb-3 flex items-center gap-2">
+          <span class="w-1 h-4 gradient-btn rounded-full inline-block"></span>
+          CDLs que já estão colhendo resultados
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <article class="kpi-card glass-hover shine">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🏆</span>
+              <span class="tag" style="background:rgba(139,92,246,0.1);color:#c4b5fd;border:1px solid rgba(139,92,246,0.25);">R$ 4,2M</span>
             </div>
-            <div>
-              <label class="block text-slate-300 mb-1">Seu WhatsApp</label>
-              <input id="lojistaTelefone" type="tel" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="DDD + número" />
+            <h3 class="font-semibold text-white">CDL Região Oeste</h3>
+            <p style="font-size:11px;" class="text-slate-400 mt-1">Valor recuperado para lojistas em 12 meses</p>
+            <div class="mt-3 space-y-1" style="font-size:11px;color:#94a3b8;">
+              <p>✦ 89 lojistas ativos</p>
+              <p>✦ ROI médio <span class="text-purple-300 font-semibold">5,1x</span></p>
+              <p>✦ 94% de satisfação</p>
             </div>
-            <div>
-              <label class="block text-slate-300 mb-1">Nome da sua CDL</label>
-              <input id="lojistaCdl" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: CDL Guarapuava" />
+          </article>
+          <article class="kpi-card glass-hover shine">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">⭐</span>
+              <span class="tag" style="background:rgba(37,99,235,0.1);color:#93c5fd;border:1px solid rgba(37,99,235,0.25);">84% satisfação</span>
             </div>
-            <p class="text-[11px] text-slate-500">Usamos esses dados apenas para te enviar o modelo de ofício.</p>
-            <button type="submit" class="w-full mt-1 px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-xs hover:bg-emerald-400 transition">Gerar modelo de ofício</button>
-          </form>
-          <p id="demandModalFeedback" class="mt-2 text-[11px] text-emerald-300 hidden">Pronto! Use o botão de WhatsApp para enviar para sua CDL.</p>
-        </div>
-      </div>
-
-      <!-- Main -->
-      <main class="flex-1 overflow-y-auto bg-slate-950">
-        <div class="max-w-7xl mx-auto px-4 py-4 space-y-4">
-          <!-- Banner de impacto -->
-          <section class="bg-gradient-to-r from-emerald-500/20 via-cyan-500/10 to-slate-900 border border-emerald-400/30 rounded-2xl p-5 shadow-card-soft">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <p class="text-[11px] uppercase tracking-wide text-emerald-300">Dados reais</p>
-                <h1 class="text-xl font-bold text-slate-50">CDLs que já saíram na frente com IA</h1>
-                <p class="text-xs text-slate-300 mt-1">Enquanto sua CDL ainda usa discador e call center, essas já estão recuperando milhões com inteligência artificial.</p>
-              </div>
-              <div class="flex gap-2">
-                <div class="bg-slate-950/80 rounded-xl px-4 py-2 text-center border border-slate-700">
-                  <p class="text-[10px] text-slate-400">Lojistas satisfeitos</p>
-                  <p class="text-lg font-bold text-emerald-300">94%</p>
-                </div>
-                <div class="bg-slate-950/80 rounded-xl px-4 py-2 text-center border border-slate-700">
-                  <p class="text-[10px] text-slate-400">Redução de custos</p>
-                  <p class="text-lg font-bold text-emerald-300">-62%</p>
-                </div>
-              </div>
+            <h3 class="font-semibold text-white">CDL Cidade Alta</h3>
+            <p style="font-size:11px;" class="text-slate-400 mt-1">Lojistas aprovaram a cobrança com IA</p>
+            <div class="mt-3 space-y-1" style="font-size:11px;color:#94a3b8;">
+              <p>✦ 156 lojistas ativos</p>
+              <p>✦ R$ 3,8M recuperados</p>
+              <p>✦ -58% em reclamações</p>
             </div>
-          </section>
-
-          <!-- Cards de CDLs que já implementaram -->
-          <section>
-            <h2 class="text-sm font-semibold text-slate-100 mb-3">📊 CDLs que já estão colhendo resultados</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft hover:border-emerald-400/50 transition">
-                <div class="flex items-center justify-between">
-                  <span class="text-2xl">🏆</span>
-                  <span class="text-[10px] text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full">+R$ 4,2M</span>
-                </div>
-                <p class="mt-2 font-semibold text-slate-50">CDL Região Oeste</p>
-                <p class="text-xs text-slate-400 mt-1">Valor recuperado para lojistas em 12 meses</p>
-                <div class="mt-3 text-[11px] text-slate-300">
-                  <p>✅ 89 lojistas ativos</p>
-                  <p>✅ ROI médio: 5,1x</p>
-                  <p>✅ 94% de satisfação</p>
-                </div>
-              </article>
-
-              <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft hover:border-emerald-400/50 transition">
-                <div class="flex items-center justify-between">
-                  <span class="text-2xl">📈</span>
-                  <span class="text-[10px] text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full">84% satisfação</span>
-                </div>
-                <p class="mt-2 font-semibold text-slate-50">CDL Cidade Alta</p>
-                <p class="text-xs text-slate-400 mt-1">Lojistas aprovaram a cobrança com IA</p>
-                <div class="mt-3 text-[11px] text-slate-300">
-                  <p>✅ 156 lojistas ativos</p>
-                  <p>✅ R$ 3,8M recuperados</p>
-                  <p>✅ Redução de 58% em reclamações</p>
-                </div>
-              </article>
-
-              <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft hover:border-emerald-400/50 transition">
-                <div class="flex items-center justify-between">
-                  <span class="text-2xl">🚀</span>
-                  <span class="text-[10px] text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded-full">-62% custos</span>
-                </div>
-                <p class="mt-2 font-semibold text-slate-50">CDL Região dos Lagos</p>
-                <p class="text-xs text-slate-400 mt-1">Redução de custos com cobrança</p>
-                <div class="mt-3 text-[11px] text-slate-300">
-                  <p>✅ 203 lojistas ativos</p>
-                  <p>✅ R$ 5,2M recuperados</p>
-                  <p>✅ ROI médio: 6,2x</p>
-                </div>
-              </article>
-            </div>
-          </section>
-
-          <!-- Tabela comparativa -->
-          <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-              <div>
-                <h2 class="text-sm font-semibold text-slate-100">📋 Comparativo: CDL com IA vs. CDL tradicional</h2>
-                <p class="text-xs text-slate-400">O que sua CDL está perdendo enquanto não implementa a IA?</p>
-              </div>
-            </div>
-
-            <div class="mt-4 overflow-x-auto">
-              <table class="min-w-full text-xs">
-                <thead>
-                  <tr class="border-b border-slate-800">
-                    <th class="text-left py-2 pr-4 text-slate-400">Métrica</th>
-                    <th class="text-left py-2 px-2 text-slate-400">CDL com IA</th>
-                    <th class="text-left py-2 px-2 text-slate-400">CDL tradicional</th>
-                    <th class="text-left py-2 pl-2 text-emerald-300">Diferença</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b border-slate-900">
-                    <td class="py-2 pr-4 font-medium">Taxa de recuperação</td>
-                    <td class="py-2 px-2 text-emerald-300">34%</td>
-                    <td class="py-2 px-2 text-rose-300">18%</td>
-                    <td class="py-2 pl-2 text-emerald-300">+89% melhor</td>
-                  </tr>
-                  <tr class="border-b border-slate-900">
-                    <td class="py-2 pr-4 font-medium">Custo operacional (mensal)</td>
-                    <td class="py-2 px-2 text-emerald-300">R$ 24.000</td>
-                    <td class="py-2 px-2 text-rose-300">R$ 62.000</td>
-                    <td class="py-2 pl-2 text-emerald-300">-62% economia</td>
-                  </tr>
-                  <tr class="border-b border-slate-900">
-                    <td class="py-2 pr-4 font-medium">Reclamações de consumidores</td>
-                    <td class="py-2 px-2 text-emerald-300">3,1%</td>
-                    <td class="py-2 px-2 text-rose-300">11,4%</td>
-                    <td class="py-2 pl-2 text-emerald-300">-73% menos</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 pr-4 font-medium">Satisfação do lojista</td>
-                    <td class="py-2 px-2 text-emerald-300">94%</td>
-                    <td class="py-2 px-2 text-rose-300">52%</td>
-                    <td class="py-2 pl-2 text-emerald-300">+42 p.p.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Seu lojista já pediu? -->
-          <section class="bg-gradient-to-r from-amber-500/10 via-emerald-500/10 to-slate-900 border border-amber-400/40 rounded-2xl p-4 shadow-card-soft">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div>
-                <h2 class="text-sm font-semibold text-slate-50 flex items-center gap-2">
-                  <span class="text-xl">⚠️</span> Seu lojista já pediu essa IA para você?
-                </h2>
-                <p class="text-xs text-slate-200 mt-1">
-                  <span id="localLojistasCounter" class="font-bold text-emerald-300">347</span> lojistas de outras cidades já pressionaram suas CDLs.
-                  Os que não pediram estão perdendo dinheiro todo mês.
-                </p>
-                <p class="text-[11px] text-slate-300 mt-2">
-                  Se você é lojista, use o botão abaixo para cobrar sua CDL. Se você é da CDL, agende uma demonstração agora.
-                </p>
-              </div>
-              <div class="flex flex-col items-start md:items-end gap-2">
-                <button
-                  id="openDemandModal2"
-                  class="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 text-xs font-semibold hover:bg-emerald-400 transition"
-                >
-                  📲 Quero isso na MINHA CDL – Cobrar agora
-                </button>
-                <p class="text-[11px] text-slate-300">
-                  Modelo de ofício pronto para você enviar.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Depoimento -->
-          <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-            <p class="text-[11px] uppercase tracking-wide text-slate-400">Depoimento real</p>
-            <div class="mt-2 flex gap-3">
-              <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-lg">👤</div>
-              <div>
-                <p class="text-xs text-slate-100 italic">
-                  "Falei com o presidente da CDL e mostrei esse painel. Em 15 dias, minha inadimplência caiu 40%. 
-                  Valeu cada centavo. Por que sua CDL ainda não tem isso?"
-                </p>
-                <p class="text-[11px] text-emerald-300 mt-1">— João, Lojão do Centro</p>
-              </div>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- BADGE FIXO + BOTÃO WHATSAPP -->
-  <div class="fixed bottom-4 left-4 z-30 bg-slate-950/95 border border-emerald-400/40 rounded-xl px-3 py-2 shadow-card-soft flex items-center gap-2 text-[11px]">
-    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-    <div class="flex flex-col">
-      <span class="text-slate-300">Lojistas que já solicitaram:</span>
-      <span class="font-semibold text-emerald-300"><span id="globalLojistasCounter">347</span> pedidos</span>
-    </div>
-  </div>
-
-  <a id="whatsButton" href="#" target="_blank" class="fixed bottom-4 right-4 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500 text-slate-950 text-xs font-semibold shadow-card-soft hover:bg-emerald-400 transition">
-    <span>📲</span> Enviar para meu WhatsApp
-  </a>
-
-  <script>
-    // Gráficos (mantidos para referência)
-    document.addEventListener("DOMContentLoaded", function() {
-      const ctx1 = document.getElementById("recoveryTrendChart");
-      if(ctx1) {
-        new Chart(ctx1, {
-          type: "line",
-          data: {
-            labels: ["Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez","Jan","Fev","Mar"],
-            datasets: [{ label: "Valor recuperado (R$)", data: [1450000,1520000,1610000,1680000,1790000,1880000,1950000,2050000,2120000,2250000,2350000,2750000], borderColor: "#22c55e", backgroundColor: "rgba(34,197,94,0.2)", fill: true, tension: 0.35 }]
-          },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { callback: (v) => "R$ " + (v/1000000).toFixed(1) + "M" } } } }
-        });
-      }
-    });
-
-    // Modal
-    const modal = document.getElementById("demandModal");
-    const openBtns = document.querySelectorAll("#openDemandModal, #openDemandModal2");
-    const closeBtn = document.getElementById("closeDemandModal");
-    if(openBtns.length && modal) openBtns.forEach(btn => btn.onclick = () => modal.classList.remove("hidden"));
-    if(closeBtn && modal) closeBtn.onclick = () => modal.classList.add("hidden");
-    if(modal) modal.onclick = (e) => { if(e.target === modal) modal.classList.add("hidden"); };
-    function handleDemandForm() { document.getElementById("demandModalFeedback")?.classList.remove("hidden"); }
-
-    // Contador animado
-    (function() { 
-      const el = document.getElementById("globalLojistasCounter");
-      const elLocal = document.getElementById("localLojistasCounter");
-      if(el) { let curr = 329; const interval = setInterval(() => { curr++; el.textContent = curr; if(elLocal) elLocal.textContent = curr; if(curr >= 347) clearInterval(interval); }, 120); }
-    })();
-
-    // WhatsApp
-    const btn = document.getElementById("whatsButton");
-    if(btn) btn.href = "https://wa.me/5548984829654?text=Presidente%2C%20quero%20essa%20IA%20de%20cobran%C3%A7a%20na%20nossa%20CDL.%20Olha%20o%20que%20lojistas%20de%20outras%20regi%C3%B5es%20j%C3%A1%20est%C3%A3o%20recuperando.%20Me%20chama%20para%20ver%20a%20demonstra%C3%A7%C3%A3o.";
-  </script>
-</body>
-</html>
+          </article>
+          <article class="kpi-card glass-hover shine">
+            <div class="flex items-center justify-between mb-

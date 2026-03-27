@@ -1,363 +1,368 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Painel do Lojista – Agente CDL IA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            cdl: {
-              bg: "#020617",
-              sidebar: "#020617",
-              surface: "#020617",
-              card: "#020617",
-              primary: "#0ea5e9",
-              primarySoft: "#0ea5e926",
-              success: "#22c55e",
-              danger: "#ef4444",
-              warning: "#f59e0b",
-              border: "#1e293b"
-            }
-          },
-          boxShadow: {
-            "card-soft": "0 18px 45px rgba(15,23,42,0.65)"
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-thumb {
-      background-color: rgba(148,163,184,0.8);
-      border-radius: 999px;
-    }
-    ::-webkit-scrollbar-track { background-color: transparent; }
-  </style>
+<meta charset="UTF-8">
+<title>Painel do Lojista – Agente CDL IA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  * { font-family: 'Inter', sans-serif; }
+  body { background: #05050f; overflow-x: hidden; }
+  
+  .gradient-text { background: linear-gradient(135deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .gradient-btn { background: linear-gradient(135deg, #7c3aed, #2563eb); transition: all 0.3s; }
+  .gradient-btn:hover { opacity: 0.85; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(124,58,237,0.5); }
+  .gradient-border { background: linear-gradient(135deg, #7c3aed, #2563eb); padding: 1px; border-radius: 16px; }
+  
+  @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3); } 50% { box-shadow: 0 0 40px rgba(139,92,246,0.6); } }
+  @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+  @keyframes pulse-slow { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.05); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+  
+  .glow-animate { animation: glowPulse 2s ease-in-out infinite; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
+  .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+  .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+  
+  .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 13px; color: #94a3b8; transition: all 0.2s; text-decoration: none; }
+  .sidebar-link:hover { background: rgba(139,92,246,0.1); color: #e2e8f0; }
+  .sidebar-link.active { background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); }
+  
+  .kpi-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(139,92,246,0.12); border-radius: 16px; padding: 20px; transition: all 0.3s; }
+  .kpi-card:hover { border-color: rgba(139,92,246,0.35); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.12); }
+  
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 500; }
+  
+  ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 999px; }
+  
+  .shine { position: relative; overflow: hidden; }
+  .shine::after { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent); transform: skewX(-20deg); animation: shine 4s infinite; }
+  @keyframes shine { 0% { left: -60%; } 100% { left: 160%; } }
+  
+  .message-item { animation: slideIn 0.4s ease-out forwards; opacity: 0; }
+  .message-item:nth-child(1) { animation-delay: 0.1s; }
+  .message-item:nth-child(2) { animation-delay: 0.3s; }
+  .message-item:nth-child(3) { animation-delay: 0.5s; }
+</style>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-  <div class="min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="w-60 bg-slate-950 border-r border-slate-900 flex flex-col">
-      <div class="h-16 flex items-center px-4 border-b border-slate-900">
-        <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
-          <span class="text-emerald-300 font-bold text-lg">R$</span>
-        </div>
-        <div class="ml-2">
-          <p class="text-xs text-slate-400 uppercase tracking-wide">Agente ROI</p>
-          <p class="text-sm font-semibold text-slate-50">Painel do Lojista</p>
-        </div>
+<body class="min-h-screen text-slate-100">
+<div class="min-h-screen flex">
+
+  <!-- SIDEBAR -->
+  <aside style="width:240px;min-width:240px;background:rgba(5,5,15,0.95);border-right:1px solid rgba(139,92,246,0.1);" class="flex flex-col backdrop-blur-xl">
+    <div style="height:64px;border-bottom:1px solid rgba(139,92,246,0.1);" class="flex items-center px-5 gap-3">
+      <div class="gradient-btn w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-sm">R$</div>
+      <div>
+        <p style="font-size:10px;letter-spacing:0.12em;" class="text-purple-400 uppercase">Agente ROI</p>
+        <p class="text-sm font-semibold text-white">Painel do Lojista</p>
       </div>
-
-      <nav class="flex-1 px-2 py-4 space-y-1 text-sm">
-        <p class="px-2 text-[10px] tracking-[0.18em] text-slate-500 uppercase mb-1">
-          Operação automática
-        </p>
-        <a href="painel-cdl.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
-          <span class="w-5 text-slate-400">🏛️</span>
-          CDLs que já aderiram
-        </a>
-        <a href="painel-lojista.html" class="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-emerald-500/10 text-emerald-200 border border-emerald-400/40">
-          <span class="w-5">🛍️</span>
-          Meu Painel
-        </a>
-        <a href="#" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
-          <span class="w-5 text-slate-400">📄</span>
-          Lista de Devedores
-        </a>
-
-        <p class="px-2 mt-4 text-[10px] tracking-[0.18em] text-slate-500 uppercase mb-1">
-          Ação
-        </p>
-        <a href="#" class="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-300 hover:bg-slate-900/80 hover:text-slate-50">
-          <span class="w-5 text-slate-400">📲</span>
-          Quero isso na MINHA CDL
-        </a>
-      </nav>
-
-      <div class="border-t border-slate-900 px-3 py-3 text-xs text-slate-400">
-        <p class="flex items-center justify-between">
-          <span>Modo demonstração</span>
-          <span class="inline-flex items-center gap-1 text-emerald-300">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            ATIVO
-          </span>
-        </p>
+    </div>
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <p style="font-size:10px;letter-spacing:0.15em;" class="text-slate-600 uppercase px-3 mb-2">Navegação</p>
+      <a href="/" class="sidebar-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        CDLs que aderiram
+      </a>
+      <a href="/painel-lojista" class="sidebar-link active">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 11H4L5 9z"/></svg>
+        Meu Painel
+      </a>
+      <a href="/painel-cliente" class="sidebar-link">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Perfil do Cliente
+      </a>
+    </nav>
+    <div style="border-top:1px solid rgba(139,92,246,0.1);" class="px-4 py-4">
+      <div class="flex items-center justify-between text-xs">
+        <span class="text-slate-500">Modo demonstração</span>
+        <span class="flex items-center gap-1.5 text-emerald-400"><div class="pulse-dot"></div>ATIVO</span>
       </div>
+    </div>
+  </aside>
 
-      <button class="mt-auto flex items-center gap-2 px-4 py-3 text-xs text-slate-400 hover:text-rose-300 hover:bg-slate-900/80">
-        <span class="w-4">⏻</span>
-        Sair
-      </button>
-    </aside>
+  <!-- MAIN CONTENT -->
+  <div class="flex-1 flex flex-col min-w-0">
 
-    <!-- Conteúdo principal -->
-    <div class="flex-1 flex flex-col">
-      <!-- HEADER GLOBAL COM MODAL -->
-      <header class="border-b border-slate-900 bg-slate-950/95 backdrop-blur z-30">
-        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
-              <span class="text-emerald-300 font-bold text-lg">IA</span>
-            </div>
-            <div>
-              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                Agente de Cobrança da CDL
-              </p>
-              <p class="text-xs text-slate-200">
-                <span class="font-semibold text-slate-50">Seu concorrente já está recuperando dinheiro com IA.</span>
-                E você?
-              </p>
-            </div>
+    <!-- HEADER -->
+    <header style="border-bottom:1px solid rgba(139,92,246,0.1);background:rgba(5,5,15,0.9);" class="backdrop-blur-xl z-30 sticky top-0">
+      <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+        <div>
+          <p style="font-size:10px;letter-spacing:0.15em;" class="text-purple-400 uppercase">Agente de Cobrança com IA</p>
+          <p class="text-sm text-slate-200"><span class="font-semibold text-white">Seu concorrente já está recuperando dinheiro com IA.</span> E você?</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex flex-col items-end text-xs text-slate-400">
+            <span>Lojistas que já pediram</span>
+            <span class="font-bold text-purple-300"><span id="header-counter">347</span> solicitações</span>
           </div>
-
-          <div class="flex items-center gap-3">
-            <div class="hidden sm:flex flex-col items-end text-[11px] text-slate-400">
-              <span>Lojistas que já pediram isso para a CDL:</span>
-              <span class="font-semibold text-emerald-300">
-                <span id="header-requests-counter">347</span> solicitações
-              </span>
-            </div>
-            <button
-              id="openDemandModal"
-              class="text-xs px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-semibold hover:bg-emerald-400 transition"
-            >
-              Quero isso AGORA
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <!-- MODAL -->
-      <div id="demandModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-40 hidden">
-        <div class="bg-slate-950 border border-slate-800 rounded-2xl max-w-md w-full mx-4 p-5 shadow-card-soft relative">
-          <button id="closeDemandModal" class="absolute right-3 top-3 text-slate-500 hover:text-slate-200 text-lg">×</button>
-          <h2 class="text-sm font-semibold text-slate-50">Quero essa IA de cobrança na minha CDL</h2>
-          <p class="mt-1 text-xs text-slate-400">
-            Preencha e vamos te enviar um modelo de ofício pronto para você cobrar sua CDL.
-          </p>
-          <form class="mt-3 space-y-3 text-xs" onsubmit="event.preventDefault(); handleDemandForm();">
-            <div>
-              <label class="block text-slate-300 mb-1">Seu nome</label>
-              <input id="lojistaNome" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: João, do Lojão do Centro" />
-            </div>
-            <div>
-              <label class="block text-slate-300 mb-1">Seu WhatsApp</label>
-              <input id="lojistaTelefone" type="tel" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="DDD + número" />
-            </div>
-            <div>
-              <label class="block text-slate-300 mb-1">Nome da sua CDL</label>
-              <input id="lojistaCdl" type="text" required class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Ex: CDL Guarapuava" />
-            </div>
-            <p class="text-[11px] text-slate-500">Usamos esses dados apenas para te enviar o modelo de ofício.</p>
-            <button type="submit" class="w-full mt-1 px-4 py-2 rounded-lg bg-emerald-500 text-slate-950 font-semibold text-xs hover:bg-emerald-400 transition">Gerar modelo de ofício</button>
-          </form>
-          <p id="demandModalFeedback" class="mt-2 text-[11px] text-emerald-300 hidden">Pronto! Use o botão de WhatsApp para enviar para sua CDL.</p>
+          <button onclick="openAIChat()" class="gradient-btn text-white text-xs font-semibold px-4 py-2 rounded-xl whitespace-nowrap glow-animate">
+            Quero isso AGORA
+          </button>
         </div>
       </div>
+    </header>
 
-      <!-- Main -->
-      <main class="flex-1 overflow-y-auto bg-slate-950">
-        <div class="max-w-7xl mx-auto px-5 py-5 space-y-4">
-          <!-- Cabeçalho do lojista -->
-          <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <div>
-              <p class="text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                Visão do lojista
-              </p>
-              <h1 class="text-xl font-semibold tracking-tight text-slate-50">
-                Lojão do Centro – Painel de Cobrança com IA
-              </h1>
-              <p class="text-xs text-slate-400">
-                Acompanhe como a IA da CDL está impactando a inadimplência e os recebimentos.
-              </p>
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto px-6 py-6 space-y-6 max-w-7xl mx-auto w-full">
+
+      <!-- HERO - Visão do Lojista -->
+      <section class="relative overflow-hidden rounded-2xl glow-animate">
+        <div class="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-purple-600/20 to-transparent animate-pulse-slow"></div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+        
+        <div style="background:linear-gradient(135deg,rgba(124,58,237,0.15),rgba(16,185,129,0.1),rgba(5,5,15,0.95));border-radius:16px;" class="relative z-10 px-6 py-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <div class="pulse-dot"></div>
+              <p style="font-size:11px;letter-spacing:0.15em;" class="text-emerald-400 uppercase tracking-wider">Visão do lojista</p>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <button class="text-xs px-3 py-2 rounded-lg bg-emerald-500 text-slate-950 font-semibold hover:bg-emerald-400">
-                Quero isso na MINHA CDL
+            <h1 class="text-3xl md:text-4xl font-bold gradient-text">Lojão do Centro</h1>
+            <p class="text-sm text-slate-300 mt-2 max-w-lg">Acompanhe como a IA da CDL está impactando sua inadimplência e seus recebimentos em tempo real.</p>
+            <div class="flex gap-3 mt-4">
+              <button onclick="openAIChat()" class="gradient-btn text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition-all hover:scale-105">
+                Quero isso na MINHA CDL →
               </button>
-              <button class="text-xs px-3 py-2 rounded-lg border border-slate-700 text-slate-200 hover:border-emerald-400/60">
+              <button class="border border-purple-400/40 text-purple-300 text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-purple-500/10 transition-all">
                 Exportar resumo
               </button>
             </div>
-          </section>
-
-          <!-- KPIs principais -->
-          <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <p class="text-[11px] uppercase tracking-wide text-slate-400">Valor recuperado neste período</p>
-              <p class="mt-1 text-xl font-semibold text-slate-50">R$ 380.000</p>
-              <p class="mt-0.5 text-[11px] text-emerald-300">↑ +22% vs. período anterior</p>
-              <p class="mt-3 text-[11px] text-slate-400">Acordos pagos e confirmados.</p>
-            </article>
-
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <p class="text-[11px] uppercase tracking-wide text-slate-400">Inadimplência atual</p>
-              <p class="mt-1 text-xl font-semibold text-slate-50">7,4%</p>
-              <p class="mt-0.5 text-[11px] text-emerald-300">↓ -2,1 p.p. nos últimos 90 dias</p>
-              <p class="mt-3 text-[11px] text-slate-400">Após início da operação com IA.</p>
-            </article>
-
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <p class="text-[11px] uppercase tracking-wide text-slate-400">ROI com IA</p>
-              <p class="mt-1 text-xl font-semibold text-slate-50">5,2x</p>
-              <p class="mt-0.5 text-[11px] text-emerald-300">↑ +0,8 vs. trimestre anterior</p>
-              <p class="mt-3 text-[11px] text-slate-400">R$ 5,20 recuperado para cada R$ 1 investido.</p>
-            </article>
-
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <p class="text-[11px] uppercase tracking-wide text-slate-400">Prazo médio de recebimento</p>
-              <p class="mt-1 text-xl font-semibold text-slate-50">24 dias</p>
-              <p class="mt-0.5 text-[11px] text-emerald-300">-6 dias desde o início da IA</p>
-              <p class="mt-3 text-[11px] text-slate-400">Dinheiro volta mais rápido para o caixa.</p>
-            </article>
-          </section>
-
-          <!-- CARD: O que você está perdendo -->
-          <article class="bg-slate-900/90 border border-rose-500/50 rounded-2xl p-4 shadow-card-soft">
-            <p class="text-[11px] uppercase tracking-wide text-rose-300">O que você está perdendo hoje</p>
-            <p class="mt-1 text-sm font-semibold text-slate-50">Estimativa dos últimos 12 meses sem uma operação de IA como esta.</p>
-            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Valor estimado não recuperado</p>
-                <p class="mt-1 text-lg font-semibold text-rose-300">R$ 87.500</p>
-              </div>
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Clientes que poderiam estar pagando</p>
-                <p class="mt-1 text-lg font-semibold text-rose-300">47 clientes</p>
-              </div>
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Impacto no fluxo de caixa</p>
-                <p class="mt-1 text-lg font-semibold text-rose-300">3 funcionários / mês</p>
-              </div>
+          </div>
+          <div class="flex gap-3 shrink-0">
+            <div style="background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);" class="rounded-xl px-5 py-4 text-center backdrop-blur-sm">
+              <p style="font-size:10px;" class="text-slate-400">ROI com IA</p>
+              <p class="text-2xl font-bold text-purple-300">5,2x</p>
+              <p class="text-[10px] text-emerald-400">↑ +0,8</p>
             </div>
-            <p class="mt-3 text-[11px] text-rose-200">Cada mês sem essa IA é mais dinheiro parado em inadimplência.</p>
-          </article>
-
-          <!-- CARD: Comparador social -->
-          <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div>
-                <p class="text-[11px] uppercase tracking-wide text-slate-400">Lojistas que já saíram na frente</p>
-                <h2 class="text-sm font-semibold text-slate-50">Enquanto você avalia, outros lojistas da sua região já estão recuperando com IA.</h2>
-              </div>
-              <div class="flex flex-wrap gap-2 text-[11px]">
-                <span class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/40">+R$ 2,1 milhões recuperados na região</span>
-                <span class="px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/40">Concorrente da rua X usa IA há 3 meses</span>
-              </div>
+            <div style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);" class="rounded-xl px-5 py-4 text-center backdrop-blur-sm">
+              <p style="font-size:10px;" class="text-slate-400">Inadimplência atual</p>
+              <p class="text-2xl font-bold text-emerald-300">7,4%</p>
+              <p class="text-[10px] text-emerald-400">↓ -2,1 p.p.</p>
             </div>
-            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Lojistas que já aderiram</p>
-                <p class="mt-1 text-lg font-semibold text-emerald-300">36 lojas</p>
-              </div>
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Recuperado com IA em 12 meses</p>
-                <p class="mt-1 text-lg font-semibold text-emerald-300">R$ 2,1 milhões</p>
-              </div>
-              <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <p class="text-slate-400">Concorrência direta</p>
-                <p class="mt-1 text-lg font-semibold text-emerald-300">Rua X • Loja vizinha</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Gráficos -->
-          <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <h2 class="text-sm font-semibold text-slate-100">Evolução dos recebimentos com IA</h2>
-              <div class="mt-3 h-56"><canvas id="recebimentosChart"></canvas></div>
-            </article>
-            <article class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-              <h2 class="text-sm font-semibold text-slate-100">Status dos acordos</h2>
-              <div class="mt-3 h-52"><canvas id="acordosChart"></canvas></div>
-            </article>
-          </section>
-
-          <!-- CARD: O que fazer agora -->
-          <section class="bg-slate-900/90 border border-emerald-400/40 rounded-2xl p-4 shadow-card-soft">
-            <p class="text-[11px] uppercase tracking-wide text-emerald-300">O que fazer agora</p>
-            <h2 class="mt-1 text-sm font-semibold text-slate-50">Não feche esta tela sem cobrar a sua CDL.</h2>
-            <ol class="mt-3 space-y-2 text-xs text-slate-200">
-              <li><span class="font-semibold text-emerald-300">PASSO 1:</span> Tire um print deste painel.</li>
-              <li><span class="font-semibold text-emerald-300">PASSO 2:</span> Mande no WhatsApp do seu gerente da CDL:<br />
-                <span class="block mt-1 text-[11px] text-slate-300 italic">"Gerente, lojistas de outras cidades já estão recuperando dinheiro com essa IA. Por que a gente ainda não tem? Quero isso na nossa CDL."</span>
-              </li>
-              <li><span class="font-semibold text-emerald-300">PASSO 3:</span> Me avise que enviou – tenho um modelo de ofício para você.</li>
-            </ol>
-          </section>
-
-          <!-- Tabela de cobranças -->
-          <section class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-card-soft">
-            <h2 class="text-sm font-semibold text-slate-100">Últimas cobranças enviadas</h2>
-            <div class="mt-3 overflow-x-auto">
-              <table class="min-w-full text-xs">
-                <thead>
-                  <tr class="border-b border-slate-800 text-slate-400">
-                    <th class="text-left py-2">Cliente</th>
-                    <th class="text-left py-2">Canal</th>
-                    <th class="text-right py-2">Valor</th>
-                    <th class="text-left py-2">Status</th>
-                    <th class="text-left py-2">Próxima ação</th>
-                   </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b border-slate-900"><td class="py-2">Maria da Silva</td><td>WhatsApp</td><td class="text-right">R$ 1.280</td><td class="text-emerald-300">Acordo em dia</td><td>Lembretes suaves</td></tr>
-                  <tr class="border-b border-slate-900"><td class="py-2">João Pereira</td><td>SMS</td><td class="text-right">R$ 840</td><td class="text-amber-300">Proposta enviada</td><td>Aguardar resposta</td></tr>
-                  <tr><td class="py-2">Ana Souza</td><td>WhatsApp</td><td class="text-right">R$ 2.150</td><td class="text-rose-300">Acordo quebrado</td><td>Nova proposta</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <!-- KPIs principais -->
+      <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="kpi-card shine">
+          <p class="text-[11px] uppercase tracking-wide text-slate-400">Valor recuperado</p>
+          <p class="mt-1 text-2xl font-bold text-purple-300">R$ 380.000</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400">↑ +22% vs. período anterior</p>
+        </div>
+        <div class="kpi-card shine">
+          <p class="text-[11px] uppercase tracking-wide text-slate-400">Inadimplência atual</p>
+          <p class="mt-1 text-2xl font-bold text-emerald-300">7,4%</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400">↓ -2,1 p.p. em 90 dias</p>
+        </div>
+        <div class="kpi-card shine">
+          <p class="text-[11px] uppercase tracking-wide text-slate-400">ROI com IA</p>
+          <p class="mt-1 text-2xl font-bold text-purple-300">5,2x</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400">R$ 5,20 para cada R$ 1 investido</p>
+        </div>
+        <div class="kpi-card shine">
+          <p class="text-[11px] uppercase tracking-wide text-slate-400">Prazo médio</p>
+          <p class="mt-1 text-2xl font-bold text-blue-300">24 dias</p>
+          <p class="mt-0.5 text-[11px] text-emerald-400">↓ -6 dias desde o início da IA</p>
+        </div>
+      </section>
+
+      <!-- CARD: O que você está perdendo -->
+      <div class="gradient-border">
+        <div class="bg-slate-950 rounded-2xl p-6">
+          <p class="text-[11px] uppercase tracking-wide text-rose-400">⚠️ Alerta de oportunidade</p>
+          <h2 class="text-sm font-semibold text-white mt-1">O que você está perdendo hoje</h2>
+          <p class="text-xs text-slate-400 mt-1">Estimativa dos últimos 12 meses sem uma operação de IA como esta.</p>
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-slate-900/80 rounded-xl p-4 text-center border border-rose-500/20">
+              <p class="text-2xl font-bold text-rose-400">R$ 87.500</p>
+              <p class="text-[11px] text-slate-400">valor não recuperado</p>
+            </div>
+            <div class="bg-slate-900/80 rounded-xl p-4 text-center border border-rose-500/20">
+              <p class="text-2xl font-bold text-rose-400">47</p>
+              <p class="text-[11px] text-slate-400">clientes que poderiam pagar</p>
+            </div>
+            <div class="bg-slate-900/80 rounded-xl p-4 text-center border border-rose-500/20">
+              <p class="text-2xl font-bold text-rose-400">3</p>
+              <p class="text-[11px] text-slate-400">funcionários / mês em cobrança</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparador Social + Message Dock -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        <!-- Message Dock - Lojistas ativos -->
+        <div class="message-dock p-4 space-y-3" style="background:rgba(10,10,26,0.8);backdrop-filter:blur(12px);border:1px solid rgba(139,92,246,0.2);border-radius:24px;">
+          <div class="flex items-center gap-2 border-b border-purple-500/20 pb-2 mb-2">
+            <div class="pulse-dot"></div>
+            <span class="text-[10px] uppercase tracking-wider text-purple-300">Lojistas ativos na região</span>
+          </div>
+          <div class="message-item flex gap-3 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-xs">JD</div>
+            <div><p class="text-xs font-semibold">João do Lojão Central</p><p class="text-[11px] text-slate-300">"ROI de 5,2x em 6 meses!"</p><p class="text-[10px] text-purple-400">há 2 dias</p></div>
+          </div>
+          <div class="message-item flex gap-3 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-emerald-500 to-green-500 flex items-center justify-center text-xs">MS</div>
+            <div><p class="text-xs font-semibold">Maria Silva</p><p class="text-[11px] text-slate-300">"Inadimplência caiu de 12% para 7,4%"</p><p class="text-[10px] text-emerald-400">há 5 dias</p></div>
+          </div>
+          <div class="message-item flex gap-3 p-3 rounded-xl bg-blue-500/5 border border-blue-500/20">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center text-xs">CR</div>
+            <div><p class="text-xs font-semibold">Carlos - CDL Região</p><p class="text-[11px] text-slate-300">"Recuperamos R$ 2,1M em 12 meses"</p><p class="text-[10px] text-cyan-400">há 1 semana</p></div>
+          </div>
+          <div class="mt-2 text-center text-[10px] text-slate-400">+36 lojistas na sua região já aderiram</div>
+        </div>
+        
+        <!-- Comparador Social -->
+        <div class="lg:col-span-2 kpi-card">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <p class="text-[11px] uppercase tracking-wide text-purple-400">Lojistas que já saíram na frente</p>
+              <h2 class="text-sm font-semibold text-white">Enquanto você avalia, outros já estão recuperando com IA</h2>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 text-[11px] border border-emerald-400/40">+R$ 2,1M recuperados</span>
+              <span class="px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 text-[11px] border border-cyan-400/40">Concorrente já usa IA</span>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="bg-slate-900/50 rounded-xl p-3 text-center"><p class="text-2xl font-bold text-purple-300">36</p><p class="text-[11px] text-slate-400">lojas que já aderiram</p></div>
+            <div class="bg-slate-900/50 rounded-xl p-3 text-center"><p class="text-2xl font-bold text-emerald-300">R$ 2,1M</p><p class="text-[11px] text-slate-400">recuperados na região</p></div>
+            <div class="bg-slate-900/50 rounded-xl p-3 text-center"><p class="text-2xl font-bold text-cyan-300">Rua X</p><p class="text-[11px] text-slate-400">concorrente direto</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gráficos -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="kpi-card">
+          <h2 class="text-sm font-semibold text-white">Evolução dos recebimentos com IA</h2>
+          <div style="height: 220px;"><canvas id="recebimentosChart"></canvas></div>
+        </div>
+        <div class="kpi-card">
+          <h2 class="text-sm font-semibold text-white">Status dos acordos</h2>
+          <div style="height: 200px;"><canvas id="acordosChart"></canvas></div>
+        </div>
+      </section>
+
+      <!-- Tabela de cobranças -->
+      <div class="kpi-card">
+        <h2 class="text-sm font-semibold text-white mb-3">Últimas cobranças enviadas</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-xs">
+            <thead>
+              <tr class="border-b border-purple-500/20">
+                <th class="text-left py-2 text-slate-400">Cliente</th>
+                <th class="text-left py-2 text-slate-400">Canal</th>
+                <th class="text-right py-2 text-slate-400">Valor</th>
+                <th class="text-left py-2 text-slate-400">Status</th>
+                <th class="text-left py-2 text-slate-400">Próxima ação</th>
+               </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-800"><td class="py-2 font-medium">Maria da Silva</td><td class="text-emerald-400">WhatsApp</td><td class="text-right">R$ 1.280</td><td class="text-emerald-300">Acordo em dia</td><td class="text-slate-400">Lembretes suaves</td></tr>
+              <tr class="border-b border-slate-800"><td class="py-2 font-medium">João Pereira</td><td>SMS</td><td class="text-right">R$ 840</td><td class="text-amber-300">Proposta enviada</td><td class="text-slate-400">Aguardar resposta</td></tr>
+              <tr><td class="py-2 font-medium">Ana Souza</td><td class="text-emerald-400">WhatsApp</td><td class="text-right">R$ 2.150</td><td class="text-rose-300">Acordo quebrado</td><td class="text-slate-400">Nova proposta</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CTA Final -->
+      <div class="gradient-border">
+        <div class="bg-slate-950 rounded-2xl p-6 text-center">
+          <h2 class="text-lg font-bold text-white">🚀 Não feche esta tela sem cobrar a sua CDL</h2>
+          <p class="text-sm text-slate-300 mt-1">36 lojistas da sua região já estão na frente. Seja o próximo.</p>
+          <button onclick="openAIChat()" class="gradient-btn text-white px-6 py-2.5 rounded-xl mt-4 font-semibold">Quero isso na MINHA CDL →</button>
+          <p class="text-[10px] text-slate-500 mt-3">Modelo de ofício pronto para você enviar</p>
+        </div>
+      </div>
+
+    </main>
   </div>
+</div>
 
-  <!-- BADGE FIXO + BOTÃO WHATSAPP -->
-  <div class="fixed bottom-4 left-4 z-30 bg-slate-950/95 border border-emerald-400/40 rounded-xl px-3 py-2 shadow-card-soft flex items-center gap-2 text-[11px]">
-    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-    <div class="flex flex-col">
-      <span class="text-slate-300">Lojistas que já solicitaram:</span>
-      <span class="font-semibold text-emerald-300"><span id="globalLojistasCounter">347</span> pedidos</span>
+<!-- BADGE FIXO -->
+<div style="position:fixed;bottom:20px;left:20px;z-index:50;background:rgba(5,5,15,0.95);border:1px solid rgba(139,92,246,0.25);border-radius:12px;padding:10px 14px;" class="flex items-center gap-2 text-xs">
+  <div class="pulse-dot"></div>
+  <div><span class="text-slate-400">Lojistas que solicitaram:</span> <span id="badge-counter" class="font-bold text-purple-300">347</span></div>
+</div>
+
+<!-- WHATSAPP BTN -->
+<a id="whatsBtn" href="#" class="gradient-btn flex items-center gap-2 text-white text-xs font-semibold px-4 py-3 rounded-full" style="position:fixed;bottom:20px;right:20px;z-index:50;">📲 Enviar para meu WhatsApp</a>
+
+<!-- MODAL CHAT -->
+<div id="aiChatModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm">
+  <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-2xl max-w-md w-full mx-4 border border-purple-500/30">
+    <div class="flex justify-between items-center p-4 border-b border-purple-500/30">
+      <div class="flex gap-2"><div class="gradient-btn w-8 h-8 rounded-full flex items-center justify-center text-white text-xs">IA</div><div><p class="text-xs font-semibold">Agente CDL IA</p><p class="text-[10px] text-purple-300">Online</p></div></div>
+      <button onclick="closeAIChat()" class="text-slate-400 text-xl">&times;</button>
     </div>
+    <div class="p-4 space-y-3 max-h-[400px] overflow-y-auto" id="chatMessages">
+      <div class="flex gap-2"><div class="gradient-btn w-6 h-6 rounded-full flex items-center justify-center text-[10px]">IA</div><div class="bg-purple-500/10 rounded-xl px-3 py-2"><p class="text-xs">Olá! 👋 Qual o nome da sua CDL para eu preparar o modelo de ofício?</p></div></div>
+      <div id="userResponse" class="hidden flex justify-end"><div class="bg-purple-600 rounded-xl px-3 py-2"><p class="text-xs text-white" id="userResponseText"></p></div></div>
+      <div id="typingIndicator" class="hidden flex gap-2"><div class="gradient-btn w-6 h-6 rounded-full flex items-center justify-center text-[10px]">IA</div><div class="bg-purple-500/10 rounded-xl px-3 py-2"><div class="flex gap-1"><span class="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></span><span class="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse delay-100"></span><span class="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse delay-200"></span></div></div></div>
+      <div id="finalMessage" class="hidden flex gap-2"><div class="gradient-btn w-6 h-6 rounded-full flex items-center justify-center text-[10px]">IA</div><div class="bg-purple-500/10 rounded-xl px-3 py-2"><p class="text-xs">✅ Modelo de ofício pronto! Envie para sua CDL pelo WhatsApp.</p></div></div>
+    </div>
+    <div class="p-4 border-t border-purple-500/30"><div class="flex gap-2"><input type="text" id="chatInput" placeholder="Digite o nome da sua CDL..." class="flex-1 bg-slate-900 border border-purple-500/30 rounded-xl px-3 py-2 text-xs"><button id="sendChatBtn" class="gradient-btn text-white px-4 py-2 rounded-xl text-xs">Enviar</button></div></div>
+    <div id="whatsAction" class="hidden p-4 border-t border-purple-500/30"><a id="modalWhatsBtn" href="#" target="_blank" class="gradient-btn flex justify-center gap-2 text-white text-xs py-2 rounded-xl">📲 Enviar para minha CDL</a></div>
   </div>
+</div>
 
-  <a id="whatsButton" href="#" target="_blank" class="fixed bottom-4 right-4 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-500 text-slate-950 text-xs font-semibold shadow-card-soft hover:bg-emerald-400 transition">
-    <span>📲</span> Enviar para meu WhatsApp
-  </a>
+<script>
+  // Gráficos
+  new Chart(document.getElementById("recebimentosChart"), {
+    type: "line",
+    data: { labels: ["Out","Nov","Dez","Jan","Fev","Mar"], datasets: [
+      { label: "Faturado", data: [320000,340000,360000,355000,370000,390000], borderColor: "#60a5fa", fill: false, tension: 0.35 },
+      { label: "Recebido (IA)", data: [240000,260000,278000,290000,305000,338000], borderColor: "#22c55e", backgroundColor: "rgba(34,197,94,0.1)", fill: true, tension: 0.35 }
+    ] },
+    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: "#94a3b8", font: { size: 10 } } } }, scales: { y: { ticks: { callback: (v) => "R$ " + (v/1000).toFixed(0) + "k", color: "#94a3b8" }, grid: { color: "rgba(139,92,246,0.1)" } }, x: { ticks: { color: "#94a3b8" }, grid: { color: "rgba(139,92,246,0.1)" } } } }
+  });
+  new Chart(document.getElementById("acordosChart"), {
+    type: "doughnut",
+    data: { labels: ["Quitados","Em dia","Atrasados"], datasets: [{ data: [42,31,11], backgroundColor: ["#22c55e","#f59e0b","#ef4444"], borderWidth: 0 }] },
+    options: { responsive: true, maintainAspectRatio: true, cutout: "65%", plugins: { legend: { position: "bottom", labels: { color: "#94a3b8", font: { size: 10 } } } } }
+  });
 
-  <script>
-    // Gráficos
-    document.addEventListener("DOMContentLoaded", function() {
-      const ctx1 = document.getElementById("recebimentosChart");
-      if(ctx1) new Chart(ctx1, { type:"line", data:{ labels:["Out","Nov","Dez","Jan","Fev","Mar"], datasets:[{ label:"Faturado", data:[320000,340000,360000,355000,370000,390000], borderColor:"#0ea5e9", fill:false, tension:0.35 },{ label:"Recebido (IA)", data:[240000,260000,278000,290000,305000,338000], borderColor:"#22c55e", backgroundColor:"rgba(34,197,94,0.2)", fill:true, tension:0.35 }] }, options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ color:"#e5e7eb", font:{ size:11 } } } }, scales:{ y:{ ticks:{ callback:(v)=> "R$ "+(v/1000).toFixed(0)+"k" } } } } });
-      const ctx2 = document.getElementById("acordosChart");
-      if(ctx2) new Chart(ctx2, { type:"doughnut", data:{ labels:["Quitados","Em dia","Atrasados"], datasets:[{ data:[42,31,11], backgroundColor:["#22c55e","#f59e0b","#ef4444"], borderWidth:0 }] }, options:{ responsive:true, maintainAspectRatio:false, cutout:"65%", plugins:{ legend:{ position:"bottom", labels:{ color:"#e5e7eb", font:{ size:11 } } } } } });
-    });
+  // Modal Chat
+  function openAIChat() { document.getElementById("aiChatModal").classList.remove("hidden"); resetChat(); }
+  function closeAIChat() { document.getElementById("aiChatModal").classList.add("hidden"); }
+  function resetChat() {
+    document.getElementById("userResponse").classList.add("hidden");
+    document.getElementById("typingIndicator").classList.add("hidden");
+    document.getElementById("finalMessage").classList.add("hidden");
+    document.getElementById("whatsAction").classList.add("hidden");
+    document.getElementById("chatInput").value = "";
+    document.getElementById("chatInput").disabled = false;
+    document.getElementById("sendChatBtn").disabled = false;
+  }
+  document.getElementById("sendChatBtn").addEventListener("click", function() {
+    let input = document.getElementById("chatInput");
+    let cdlName = input.value.trim();
+    if(!cdlName) return;
+    input.disabled = true; this.disabled = true;
+    document.getElementById("userResponseText").innerText = cdlName;
+    document.getElementById("userResponse").classList.remove("hidden");
+    let container = document.getElementById("chatMessages");
+    container.scrollTop = container.scrollHeight;
+    setTimeout(() => { document.getElementById("typingIndicator").classList.remove("hidden"); container.scrollTop = container.scrollHeight; }, 800);
+    setTimeout(() => { document.getElementById("typingIndicator").classList.add("hidden"); document.getElementById("finalMessage").classList.remove("hidden"); container.scrollTop = container.scrollHeight; }, 2000);
+    setTimeout(() => { document.getElementById("whatsAction").classList.remove("hidden"); document.getElementById("modalWhatsBtn").href = "https://wa.me/5548984829654?text=Presidente,%20quero%20IA%20na%20"+encodeURIComponent(cdlName); }, 2800);
+  });
+  document.getElementById("chatInput").addEventListener("keypress", function(e) { if(e.key === "Enter") document.getElementById("sendChatBtn").click(); });
+  document.getElementById("aiChatModal").addEventListener("click", function(e) { if(e.target === this) closeAIChat(); });
+  document.addEventListener("keydown", function(e) { if(e.key === "Escape") closeAIChat(); });
 
-    // Modal
-    const modal = document.getElementById("demandModal");
-    const openBtn = document.getElementById("openDemandModal");
-    const closeBtn = document.getElementById("closeDemandModal");
-    if(openBtn && modal) openBtn.onclick = () => modal.classList.remove("hidden");
-    if(closeBtn && modal) closeBtn.onclick = () => modal.classList.add("hidden");
-    if(modal) modal.onclick = (e) => { if(e.target === modal) modal.classList.add("hidden"); };
-    function handleDemandForm() { document.getElementById("demandModalFeedback")?.classList.remove("hidden"); }
-
-    // Contador animado
-    (function() { const el = document.getElementById("globalLojistasCounter"); if(el) { let curr = 329; const interval = setInterval(() => { curr++; el.textContent = curr; if(curr >= 347) clearInterval(interval); }, 120); } })();
-
-    // WhatsApp
-    const btn = document.getElementById("whatsButton");
-    if(btn) btn.href = "https://wa.me/5551999999999?text=Presidente%2C%20quero%20essa%20IA%20de%20cobran%C3%A7a%20na%20nossa%20CDL.%20Olha%20o%20que%20lojistas%20de%20outras%20regi%C3%B5es%20j%C3%A1%20est%C3%A3o%20recuperando.%20Me%20chama%20para%20ver%20a%20demonstra%C3%A7%C3%A3o.";
-  </script>
+  // Contador animado
+  (function() { let el = document.getElementById("header-counter"), badge = document.getElementById("badge-counter"), curr = 329, interval = setInterval(() => { curr++; if(el) el.textContent = curr; if(badge) badge.textContent = curr; if(curr >= 347) clearInterval(interval); }, 100); })();
+  
+  // WhatsApp button
+  document.getElementById("whatsBtn").href = "https://wa.me/5548984829654?text=Presidente,%20quero%20essa%20IA%20de%20cobran%C3%A7a%20na%20nossa%20CDL.%20Vi%20o%20painel%20do%20lojista%20e%20quero%20ser%20o%20pr%C3%B3ximo.";
+</script>
 </body>
 </html>

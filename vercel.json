@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/painel-lojista", "destination": "/painel-lojista.html" },
+    { "source": "/painel-cliente", "destination": "/painel-cliente.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

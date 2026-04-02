@@ -3,9 +3,21 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/painel-lojista", "destination": "/painel-lojista.html" },
-    { "source": "/painel-cliente", "destination": "/painel-cliente.html" },
-    { "source": "/area-cliente", "destination": "/area-cliente.html" }
+    {
+      "source": "/",
+      "destination": "/index"
+    },
+    {
+      "source": "/painel-lojista",
+      "destination": "/painel-lojista"
+    },
+    {
+      "source": "/painel-cliente",
+      "destination": "/painel-cliente"
+    },
+    {
+      "source": "/area-cliente",
+      "destination": "/area-cliente"
+    }
   ]
 }

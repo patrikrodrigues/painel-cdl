@@ -1,7 +1,11 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
+    { "source": "/", "destination": "/index.html" },
     { "source": "/painel-lojista", "destination": "/painel-lojista.html" },
     { "source": "/painel-cliente", "destination": "/painel-cliente.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/area-cliente", "destination": "/area-cliente.html" }
   ]
 }

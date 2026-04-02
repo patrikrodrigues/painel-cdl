@@ -259,7 +259,7 @@
       font-size: clamp(28px, 3.7vw, 40px);
       line-height: 1.03;
       letter-spacing: -.03em;
-      max-width: 12ch;
+      max-width: 13ch;
     }
 
     .hero-panel p {
@@ -370,7 +370,7 @@
 
     .section-head {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 14px;
@@ -387,6 +387,7 @@
       font-size: 13px;
       color: var(--muted);
       line-height: 1.5;
+      max-width: 52ch;
     }
 
     .mini-badge {
@@ -398,6 +399,13 @@
       font-weight: 700;
       background: rgba(255,255,255,.05);
       color: #e7eef6;
+      white-space: nowrap;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
     }
 
     .grid-small {
@@ -562,6 +570,7 @@
       }
 
       .sidebar.open { display: block; }
+
       .mobile-menu {
         display: inline-flex;
         width: 42px;
@@ -599,6 +608,10 @@
       .hero-panel h1 {
         max-width: none;
         font-size: 30px;
+      }
+
+      .chart-wrap {
+        height: 260px;
       }
     }
   </style>
@@ -638,7 +651,7 @@
       </a>
 
       <div class="sidebar-box">
-        <p>Painel pensado para vídeo-demo: menos explicação textual e mais visão macro de resultado, reputação e receita da CDL. [page:4]</p>
+        <p>Painel pensado para vídeo-demo, com foco em resultado, receita institucional, ranking e operação consolidada. [page:5]</p>
       </div>
     </aside>
 
@@ -654,7 +667,7 @@
 
             <div>
               <p class="eyebrow">Painel CDL • Visão Macro</p>
-              <p class="top-title"><strong>Resultados consolidados para presidente e diretoria.</strong> Os indicadores principais destacam receita, recuperação, eficiência operacional e reputação da operação. [web:22][web:27]</p>
+              <p class="top-title"><strong>Resultados consolidados para presidente e diretoria.</strong> Painel desenhado para mostrar recuperação, receita e escala operacional da CDL. [page:5]</p>
             </div>
           </div>
 
@@ -668,15 +681,15 @@
       <main class="main">
         <section class="hero">
           <div class="hero-panel">
-            <p class="eyebrow">AGENTE ROI • CDL ARARANGUÁ</p>
+            <p class="eyebrow">AGENTE ROI • CDL BELO HORIZONTE</p>
             <h1>Operação automática de cobrança para a CDL</h1>
             <p>
-              Visão consolidada do desempenho mensal da operação: recuperação, base ativa, retorno médio por lojista e receita recorrente da entidade. [web:22][web:27]
+              Visão consolidada da operação mensal: valor recuperado, base de lojistas, retorno médio e receita recorrente institucional.
             </p>
 
             <div class="hero-actions">
               <a class="btn-primary" href="/painel-lojista">Ver painel do lojista</a>
-              <a class="btn-secondary" href="https://wa.me/5548984829654?text=Quero%20simular%20a%20opera%C3%A7%C3%A3o%20da%20CDL" target="_blank" rel="noopener noreferrer">Simular cobrança</a>
+              <a class="btn-secondary" href="https://wa.me/5548984829654?text=Quero%20simular%20a%20opera%C3%A7%C3%A3o%20da%20CDL%20de%20Belo%20Horizonte" target="_blank" rel="noopener noreferrer">Simular cobrança</a>
             </div>
           </div>
 
@@ -685,13 +698,13 @@
 
             <div class="aside-stat">
               <p class="label">CDL</p>
-              <p class="value">Araranguá</p>
+              <p class="value">Belo Horizonte</p>
               <p class="sub">Administrador da operação</p>
             </div>
 
             <div class="aside-stat">
               <p class="label">Receita recorrente da CDL</p>
-              <p class="value">R$ 37,2 mil</p>
+              <p class="value">R$ 91,4 mil</p>
               <p class="sub">Comissão estimada do mês sobre a recuperação</p>
             </div>
           </div>
@@ -700,25 +713,25 @@
         <section class="grid-kpis">
           <article class="card">
             <p class="kpi-label">Valor total recuperado</p>
-            <p class="kpi-value">R$ 1,24 mi</p>
-            <p class="kpi-sub good">+18% vs mês anterior</p>
+            <p class="kpi-value">R$ 3,05 mi</p>
+            <p class="kpi-sub good">+22% vs mês anterior</p>
           </article>
 
           <article class="card">
             <p class="kpi-label">Lojistas ativos</p>
-            <p class="kpi-value">312</p>
-            <p class="kpi-sub good">+27 novas lojas no período</p>
+            <p class="kpi-value">684</p>
+            <p class="kpi-sub good">+41 novas lojas no período</p>
           </article>
 
           <article class="card">
             <p class="kpi-label">ROI médio por lojista</p>
-            <p class="kpi-value">R$ 3,80</p>
+            <p class="kpi-value">R$ 4,10</p>
             <p class="kpi-sub">Recuperado para cada R$ 1 investido</p>
           </article>
 
           <article class="card">
             <p class="kpi-label">Receita da CDL</p>
-            <p class="kpi-value">R$ 37,2 mil</p>
+            <p class="kpi-value">R$ 91,4 mil</p>
             <p class="kpi-sub warn">Renda recorrente estimada do mês</p>
           </article>
         </section>
@@ -728,37 +741,40 @@
             <div class="section-head">
               <div>
                 <h2 class="section-title">Dívidas recuperadas vs perdidas</h2>
-                <p class="section-sub">Os principais KPIs do painel precisam contar a história do negócio com rapidez, ligando receita, eficiência e retorno. [web:22][web:25]</p>
+                <p class="section-sub">Comparativo semanal da carteira processada no mês.</p>
               </div>
-              <span class="mini-badge">Total do mês: R$ 1,75 mi</span>
+              <span class="mini-badge">Total do mês: R$ 4,08 mi</span>
             </div>
-            <canvas id="recoveryChart" height="280"></canvas>
+
+            <div class="chart-wrap">
+              <canvas id="recoveryChart"></canvas>
+            </div>
           </article>
 
           <article class="card">
             <div class="section-head">
               <div>
                 <h2 class="section-title">Indicadores de reputação</h2>
-                <p class="section-sub">Além de recuperar, a operação precisa preservar experiência e qualidade percebida. [web:27]</p>
+                <p class="section-sub">Qualidade da operação e percepção do atendimento.</p>
               </div>
             </div>
 
             <div class="grid-small">
               <div class="mini-stat">
                 <p class="label">Interações amigáveis</p>
-                <p class="value">94%</p>
+                <p class="value">96%</p>
                 <p class="sub good">Excelente</p>
               </div>
 
               <div class="mini-stat">
                 <p class="label">Taxa de reclamação</p>
-                <p class="value">0,4%</p>
+                <p class="value">0,3%</p>
                 <p class="sub good">Baixíssima</p>
               </div>
 
               <div class="mini-stat">
                 <p class="label">Satisfação pós-acordo</p>
-                <p class="value">4,7/5</p>
+                <p class="value">4,8/5</p>
                 <p class="sub good">Positiva</p>
               </div>
             </div>
@@ -768,36 +784,36 @@
                 <div class="rank-row">
                   <div class="rank-num">1</div>
                   <div>
-                    <strong>Moda Centro</strong>
+                    <strong>Rede Casa Mineira</strong>
                     <span>Maior volume recuperado no mês</span>
                   </div>
                   <div class="rank-value">
-                    <strong>R$ 86 mil</strong>
-                    <span>ROI 4,8x</span>
+                    <strong>R$ 214 mil</strong>
+                    <span>ROI 5,1x</span>
                   </div>
                 </div>
 
                 <div class="rank-row">
                   <div class="rank-num">2</div>
                   <div>
-                    <strong>Casa & Lar</strong>
+                    <strong>Drogaria Central BH</strong>
                     <span>Maior taxa de conversão em acordos</span>
                   </div>
                   <div class="rank-value">
-                    <strong>R$ 74 mil</strong>
-                    <span>ROI 4,2x</span>
+                    <strong>R$ 186 mil</strong>
+                    <span>ROI 4,7x</span>
                   </div>
                 </div>
 
                 <div class="rank-row">
                   <div class="rank-num">3</div>
                   <div>
-                    <strong>Auto Peças Sul</strong>
+                    <strong>Auto Peças Pampulha</strong>
                     <span>Melhor evolução no trimestre</span>
                   </div>
                   <div class="rank-value">
-                    <strong>R$ 63 mil</strong>
-                    <span>ROI 3,9x</span>
+                    <strong>R$ 163 mil</strong>
+                    <span>ROI 4,3x</span>
                   </div>
                 </div>
               </div>
@@ -810,9 +826,9 @@
             <div class="section-head">
               <div>
                 <h2 class="section-title">Fila operacional do dia</h2>
-                <p class="section-sub">Uma tabela curta ajuda o vídeo a parecer sistema real sem virar tela de texto. [page:4]</p>
+                <p class="section-sub">Carteiras prioritárias em processamento.</p>
               </div>
-              <span class="mini-badge">Atualizado às 15:08</span>
+              <span class="mini-badge">Atualizado às 15:18</span>
             </div>
 
             <div class="table-wrap">
@@ -828,30 +844,30 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Moda Centro</td>
-                    <td>84</td>
-                    <td>R$ 118 mil</td>
+                    <td>Rede Casa Mineira</td>
+                    <td>172</td>
+                    <td>R$ 328 mil</td>
                     <td><span class="status good">Acima da meta</span></td>
                     <td>Nova rodada de acordos</td>
                   </tr>
                   <tr>
-                    <td>Casa & Lar</td>
-                    <td>57</td>
-                    <td>R$ 92 mil</td>
+                    <td>Drogaria Central BH</td>
+                    <td>119</td>
+                    <td>R$ 241 mil</td>
                     <td><span class="status soft">Operação estável</span></td>
-                    <td>Follow-up em 48h</td>
+                    <td>Follow-up em 24h</td>
                   </tr>
                   <tr>
-                    <td>Auto Peças Sul</td>
-                    <td>39</td>
-                    <td>R$ 76 mil</td>
+                    <td>Auto Peças Pampulha</td>
+                    <td>94</td>
+                    <td>R$ 214 mil</td>
                     <td><span class="status attn">Atenção</span></td>
                     <td>Revisar régua de contato</td>
                   </tr>
                   <tr>
-                    <td>Farmácia Central</td>
-                    <td>31</td>
-                    <td>R$ 51 mil</td>
+                    <td>Magazine Savassi</td>
+                    <td>88</td>
+                    <td>R$ 179 mil</td>
                     <td><span class="status good">Boa conversão</span></td>
                     <td>Expandir base ativa</td>
                   </tr>
@@ -864,7 +880,7 @@
             <div class="section-head">
               <div>
                 <h2 class="section-title">Resumo executivo</h2>
-                <p class="section-sub">CDLs reais já vendem serviços de cobrança e recuperação; aqui a IA aparece como evolução operacional desse repertório. [web:4][web:21][web:23][web:28]</p>
+                <p class="section-sub">Leitura rápida para presidente e diretoria.</p>
               </div>
             </div>
 
@@ -888,7 +904,7 @@
                   <span>Serviço útil e conectado ao caixa</span>
                 </div>
                 <div class="rank-value">
-                  <strong>312</strong>
+                  <strong>684</strong>
                   <span>Lojas ativas</span>
                 </div>
               </div>
@@ -900,7 +916,7 @@
                   <span>Fluxos, priorização e acompanhamento</span>
                 </div>
                 <div class="rank-value">
-                  <strong>94%</strong>
+                  <strong>96%</strong>
                   <span>Interações amigáveis</span>
                 </div>
               </div>
@@ -908,7 +924,7 @@
 
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
               <a class="btn-primary" href="/painel-lojista">Abrir painel do lojista</a>
-              <a class="btn-secondary" href="https://wa.me/5548984829654?text=Quero%20apresentar%20o%20painel%20CDL%20para%20minha%20entidade" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+              <a class="btn-secondary" href="https://wa.me/5548984829654?text=Quero%20apresentar%20o%20painel%20CDL%20de%20Belo%20Horizonte" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
             </div>
           </article>
         </section>
@@ -927,31 +943,72 @@
       sidebar.classList.toggle('open');
     }
 
-    new Chart(document.getElementById('recoveryChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Sem 01', 'Sem 02', 'Sem 03', 'Sem 04'],
-        datasets: [
-          {
-            label: 'Recuperadas',
-            data: [310000, 420000, 505000, 515000],
-            backgroundColor: 'rgba(97,193,143,0.82)',
-            borderRadius: 8
+    const chartEl = document.getElementById('recoveryChart');
+    if (chartEl) {
+      new Chart(chartEl, {
+        type: 'bar',
+        data: {
+          labels: ['Sem 01', 'Sem 02', 'Sem 03', 'Sem 04'],
+          datasets: [
+            {
+              label: 'Recuperadas',
+              data: [690000, 760000, 810000, 790000],
+              backgroundColor: 'rgba(97,193,143,0.82)',
+              borderRadius: 8,
+              barThickness: 26
+            },
+            {
+              label: 'Perdidas',
+              data: [310000, 280000, 240000, 200000],
+              backgroundColor: 'rgba(217,123,123,0.76)',
+              borderRadius: 8,
+              barThickness: 26
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
           },
-          {
-            label: 'Perdidas',
-            data: [120000, 145000, 128000, 107000],
-            backgroundColor: 'rgba(217,123,123,0.76)',
-            borderRadius: 8
+          plugins: {
+            legend: {
+              labels: {
+                color: '#9aa7b7',
+                boxWidth: 10,
+                boxHeight: 10,
+                font: { size: 11 }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f141b',
+              borderColor: 'rgba(255,255,255,0.08)',
+              borderWidth: 1,
+              titleColor: '#ffffff',
+              bodyColor: '#d9e2eb'
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#7f8a98' },
+              grid: { display: false }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#7f8a98',
+                callback: function(value) {
+                  return 'R$ ' + (value / 1000) + 'k';
+                }
+              },
+              grid: { color: 'rgba(255,255,255,0.04)' }
+            }
           }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#9aa7b7',
-              boxWidth: 10,
-              
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Painel do Lojista | Proposta para sua CDL</title>
+  <title>Painel do Lojista | CDL Belo Horizonte</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -24,13 +24,12 @@
       --primary: #176b63;
       --primary-hover: #12584f;
       --primary-soft: rgba(23,107,99,0.15);
-      --success: #5fb98a;
-      --warn: #d0a96d;
+      --success: #61c18f;
       --danger: #d97b7b;
+      --warn: #d8b06f;
       --radius: 18px;
-      --radius-sm: 12px;
       --shadow: 0 20px 60px rgba(0,0,0,0.28);
-      --container: 1240px;
+      --container: 1320px;
     }
 
     * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -43,13 +42,13 @@
     .shell {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 260px 1fr;
+      grid-template-columns: 250px 1fr;
     }
 
     .sidebar {
-      background: rgba(8,11,15,0.94);
+      background: rgba(8,11,15,0.95);
       border-right: 1px solid var(--line);
-      padding: 20px 16px;
+      padding: 18px 14px;
       position: sticky;
       top: 0;
       height: 100vh;
@@ -59,46 +58,45 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding-bottom: 18px;
+      padding: 4px 6px 18px;
       border-bottom: 1px solid var(--line);
       margin-bottom: 18px;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 14px;
       background: linear-gradient(180deg, #204b47, #163633);
+      color: #e6f5f2;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #dff3ef;
       font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: .04em;
     }
 
-    .brand-kicker {
-      font-size: 11px;
+    .brand p { margin: 0; }
+    .brand .kicker {
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: #93bcb6;
-      margin: 0 0 3px 0;
+      letter-spacing: .16em;
+      color: #96c1ba;
+      margin-bottom: 3px;
     }
-
-    .brand-title {
+    .brand .title {
       font-size: 15px;
       font-weight: 700;
       color: #fff;
-      margin: 0;
     }
 
-    .nav-label {
+    .nav-group-title {
+      padding: 0 10px;
+      margin: 0 0 8px;
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: .12em;
       color: var(--faint);
-      padding: 0 10px;
-      margin-bottom: 8px;
     }
 
     .nav-link {
@@ -107,38 +105,38 @@
       gap: 10px;
       padding: 11px 12px;
       border-radius: 12px;
-      color: var(--muted);
       font-size: 14px;
+      color: var(--muted);
       border: 1px solid transparent;
-      transition: 180ms ease;
+      transition: .18s ease;
       margin-bottom: 6px;
     }
 
     .nav-link:hover {
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
+      background: rgba(255,255,255,.03);
       border-color: var(--line);
+      color: var(--text);
     }
 
     .nav-link.active {
-      background: rgba(255,255,255,0.04);
-      color: #fff;
+      background: rgba(255,255,255,.04);
       border-color: var(--line-strong);
+      color: #fff;
     }
 
-    .sidebar-foot {
-      margin-top: 20px;
+    .sidebar-box {
+      margin-top: 18px;
       padding: 14px;
       border-radius: 14px;
+      background: rgba(255,255,255,.02);
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.02);
     }
 
-    .sidebar-foot p {
+    .sidebar-box p {
       margin: 0;
-      color: var(--muted);
       font-size: 12px;
       line-height: 1.55;
+      color: var(--muted);
     }
 
     .content {
@@ -152,282 +150,145 @@
       top: 0;
       z-index: 30;
       backdrop-filter: blur(16px);
-      background: rgba(11,15,20,0.88);
+      background: rgba(11,15,20,.88);
       border-bottom: 1px solid var(--line);
     }
 
-    .topbar-inner,
-    .main {
-      width: min(var(--container), calc(100% - 32px));
+    .topbar-inner, .main {
+      width: min(var(--container), calc(100% - 28px));
       margin: 0 auto;
     }
 
     .topbar-inner {
-      min-height: 74px;
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 14px 0;
+      gap: 16px;
+      padding: 12px 0;
     }
-
-    .eyebrow {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: #93bcb6;
-      margin: 0 0 4px 0;
-    }
-
-    .top-title {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .top-title strong {
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .btn-primary, .btn-secondary {
-      min-height: 44px;
-      padding: 0 18px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: 180ms ease;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #effaf8;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-
-    .btn-primary:hover { background: var(--primary-hover); }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line-strong);
-      color: var(--text);
-    }
-
-    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 
     .mobile-menu {
       display: none;
     }
 
+    .top-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: #93bcb6;
+    }
+
+    .top-title {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .top-title strong { color: #fff; }
+
+    .btn-primary, .btn-secondary {
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: .18s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #eefaf8;
+    }
+
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,.05); }
+
     .main {
-      padding: 28px 0 42px;
+      padding: 22px 0 34px;
       display: grid;
-      gap: 18px;
+      gap: 16px;
     }
 
     .hero {
-      background:
-        radial-gradient(circle at top right, rgba(23,107,99,0.18), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      padding: 32px;
-      box-shadow: var(--shadow);
-    }
-
-    .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
-      gap: 22px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1.4fr) 360px;
+      gap: 16px;
     }
 
-    .hero h1 {
+    .hero-panel, .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+    }
+
+    .hero-panel {
+      padding: 24px;
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(23,107,99,.18), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        var(--surface);
+    }
+
+    .hero-panel h1 {
       margin: 0;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
+      font-size: clamp(28px, 3.7vw, 40px);
+      line-height: 1.03;
+      letter-spacing: -.03em;
       max-width: 12ch;
     }
 
-    .lead {
-      margin: 16px 0 0 0;
+    .hero-panel p {
+      margin: 12px 0 0;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.65;
-      max-width: 60ch;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 62ch;
     }
 
     .hero-actions {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    .hero-note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--faint);
-    }
-
-    .hero-side {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-      border-radius: 20px;
+    .hero-aside {
       padding: 22px;
       display: grid;
       gap: 14px;
       align-content: start;
     }
 
-    .mini-kicker {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #93bcb6;
-      margin-bottom: 10px;
-    }
-
-    .hero-side h3 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.2;
-    }
-
-    .hero-side p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .summary-points {
-      display: grid;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .summary-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      margin-top: 7px;
-      border-radius: 999px;
-      background: var(--primary);
-      flex: 0 0 auto;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 18px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
-      min-width: 0;
-    }
-
-    .metric-card .label {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0 0 10px 0;
-    }
-
-    .metric-card .value {
-      margin: 0;
-      font-size: 32px;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      font-variant-numeric: tabular-nums lining-nums;
-    }
-
-    .metric-card .delta {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .delta.good { color: #9fd6bd; }
-    .delta.warn { color: #e2c58d; }
-
-    .section-title {
-      margin: 0 0 8px 0;
-      font-size: 25px;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-    }
-
-    .section-intro {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      max-width: 68ch;
-    }
-
-    .impact-list, .attention-list {
-      display: grid;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .impact-item, .attention-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .impact-item strong, .attention-item strong {
-      display: block;
-      color: #fff;
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-
-    .impact-item p, .attention-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .badge-soft {
+    .hero-aside .tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      width: fit-content;
       padding: 7px 10px;
       border-radius: 999px;
       background: var(--primary-soft);
@@ -436,88 +297,248 @@
       font-weight: 700;
     }
 
-    .opportunity-wrap {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .op-card {
+    .aside-stat {
       padding: 16px;
       border-radius: 16px;
       background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,.06);
     }
 
-    .op-card p {
-      margin: 0;
-    }
-
-    .op-card .op-label {
+    .aside-stat .label {
+      margin: 0 0 8px;
       font-size: 12px;
       color: var(--muted);
-      margin-bottom: 8px;
     }
 
-    .op-card .op-value {
-      font-size: 26px;
+    .aside-stat .value {
+      margin: 0;
+      font-size: 28px;
       font-weight: 800;
-      letter-spacing: -0.03em;
+      letter-spacing: -.03em;
       font-variant-numeric: tabular-nums lining-nums;
-      color: #fff;
     }
 
-    .op-card .op-note {
+    .aside-stat .sub {
       margin-top: 8px;
-      color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      color: var(--muted);
     }
 
-    .list-plain {
+    .grid-kpis {
       display: grid;
-      gap: 12px;
-      margin-top: 18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    .plain-row {
+    .card {
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .kpi-label {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .kpi-value {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    .kpi-sub {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .good { color: #a7dfc4; }
+    .danger { color: #efaaaa; }
+    .warn { color: #e8cb96; }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.35fr .95fr;
+      gap: 16px;
+    }
+
+    .grid-bottom {
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr;
+      gap: 16px;
+    }
+
+    .section-head {
       display: flex;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 54ch;
+    }
+
+    .mini-badge {
+      display: inline-flex;
       align-items: center;
-      padding: 14px 16px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,.05);
+      color: #e7eef6;
+      white-space: nowrap;
+    }
+
+    .chart-wrap {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mini-stat {
+      padding: 16px;
+      border-radius: 16px;
       background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .mini-stat .label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .mini-stat .value {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    .mini-stat .sub {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .rank-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
       border-radius: 14px;
     }
 
-    .plain-row strong {
+    .rank-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,.05);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .rank-row strong {
       display: block;
       font-size: 14px;
       margin-bottom: 2px;
     }
 
-    .plain-row span {
+    .rank-row span {
       font-size: 13px;
       color: var(--muted);
     }
 
-    .count-pill {
-      min-width: 42px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      text-align: center;
+    .rank-value {
+      text-align: right;
+    }
+
+    .rank-value strong {
+      font-size: 15px;
+      margin-bottom: 3px;
+      display: block;
+    }
+
+    .rank-value span {
       font-size: 12px;
+      color: var(--muted);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .timeline-row .time {
+      font-size: 12px;
+      color: var(--muted);
       font-weight: 700;
-      color: #fff;
-      font-variant-numeric: tabular-nums lining-nums;
+      letter-spacing: .04em;
+    }
+
+    .timeline-row strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .timeline-row span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     .table-wrap {
       overflow-x: auto;
-      margin-top: 16px;
     }
 
     table {
@@ -528,7 +549,7 @@
 
     th, td {
       padding: 12px 10px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
       text-align: left;
       font-variant-numeric: tabular-nums lining-nums;
     }
@@ -552,138 +573,26 @@
     }
 
     .status.good {
-      background: rgba(95,185,138,0.13);
-      color: #b7e7ce;
+      background: rgba(97,193,143,.14);
+      color: #bfe9d0;
     }
 
     .status.attn {
-      background: rgba(208,169,109,0.14);
-      color: #edd2a4;
+      background: rgba(216,176,111,.14);
+      color: #efd5a4;
     }
 
     .status.soft {
-      background: rgba(255,255,255,0.06);
-      color: #dce5ef;
-    }
-
-    .message-box {
-      margin-top: 18px;
-      padding: 16px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 14px;
-      color: #e8eef6;
-      font-size: 14px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-    }
-
-    .cta-band {
-      background:
-        linear-gradient(180deg, rgba(23,107,99,0.16), rgba(23,107,99,0.08)),
-        var(--surface);
-      border: 1px solid rgba(147,188,182,0.18);
-      border-radius: 24px;
-      padding: 28px;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .cta-band h2 {
-      margin: 0;
-      font-size: 28px;
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      max-width: 14ch;
-    }
-
-    .cta-band p {
-      margin: 8px 0 0 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      max-width: 58ch;
+      background: rgba(255,255,255,.06);
+      color: #dde7f0;
     }
 
     .floating-whats {
       position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 30;
+      right: 18px;
+      bottom: 18px;
+      z-index: 40;
       box-shadow: var(--shadow);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(5,8,10,0.76);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 50;
-      backdrop-filter: blur(8px);
-    }
-
-    .modal-backdrop.open { display: flex; }
-
-    .modal {
-      width: 100%;
-      max-width: 560px;
-      background: #0f1318;
-      border: 1px solid var(--line-strong);
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .modal-head, .modal-body, .modal-foot {
-      padding: 20px 22px;
-    }
-
-    .modal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .modal-head h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .modal-body p {
-      margin: 0 0 16px 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .field-label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .field {
-      width: 100%;
-      min-height: 46px;
-      border-radius: 12px;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.03);
-      color: #fff;
-      padding: 0 14px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .field:focus {
-      border-color: rgba(147,188,182,0.45);
-      box-shadow: 0 0 0 3px rgba(23,107,99,0.16);
     }
 
     @media (max-width: 1120px) {
@@ -697,13 +606,11 @@
         left: 0;
         top: 0;
         width: 280px;
-        z-index: 40;
+        z-index: 50;
         box-shadow: var(--shadow);
       }
 
-      .sidebar.open {
-        display: block;
-      }
+      .sidebar.open { display: block; }
 
       .mobile-menu {
         display: inline-flex;
@@ -713,24 +620,22 @@
         justify-content: center;
         border-radius: 12px;
         border: 1px solid var(--line);
-        background: rgba(255,255,255,0.03);
+        background: rgba(255,255,255,.03);
         color: #fff;
       }
 
-      .hero-grid,
-      .grid-4,
-      .grid-3,
-      .grid-2,
-      .opportunity-wrap,
-      .cta-band {
+      .hero,
+      .grid-kpis,
+      .grid-main,
+      .grid-bottom,
+      .mini-grid {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 720px) {
-      .topbar-inner,
-      .main {
-        width: min(calc(100% - 24px), var(--container));
+      .topbar-inner, .main {
+        width: min(calc(100% - 20px), var(--container));
       }
 
       .topbar-inner {
@@ -738,19 +643,17 @@
         align-items: flex-start;
       }
 
-      .hero,
-      .card,
-      .cta-band {
-        padding: 20px;
+      .hero-panel, .hero-aside, .card {
+        padding: 18px;
       }
 
-      .hero h1 {
+      .hero-panel h1 {
         max-width: none;
-        font-size: 31px;
+        font-size: 30px;
       }
 
-      .section-title {
-        font-size: 23px;
+      .chart-wrap {
+        height: 260px;
       }
     }
   </style>
@@ -761,43 +664,43 @@
       <div class="brand">
         <div class="brand-mark">CDL</div>
         <div>
-          <p class="brand-kicker">Infraestrutura com IA</p>
-          <p class="brand-title">Painel do lojista</p>
+          <p class="kicker">Operação com IA</p>
+          <p class="title">Painel do lojista</p>
         </div>
       </div>
 
-      <div class="nav-label">Navegação</div>
+      <p class="nav-group-title">Painéis</p>
 
       <a href="/" class="nav-link">
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10Zm10 8h8V3h-8v18ZM3 21h8v-6H3v6Z"/>
         </svg>
-        Visão institucional
+        Painel CDL
       </a>
 
       <a href="/painel-lojista" class="nav-link active">
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 9h14M6 5h12l1 14H5L6 5Z"/>
         </svg>
-        Painel do lojista
+        Painel Lojista
       </a>
 
       <a href="/painel-cliente" class="nav-link">
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0"/>
         </svg>
-        Perfil do cliente
+        Lista de Devedores
       </a>
 
-      <div class="sidebar-foot">
-        <p>Este painel foi pensado para o lojista entender a proposta com clareza e ter um argumento mais forte para levar a solução à CDL.</p>
+      <div class="sidebar-box">
+        <p>Visão do associado com foco em recuperação, negociação, inadimplência e performance de carteira. [page:6]</p>
       </div>
     </aside>
 
     <div class="content">
       <header class="topbar">
         <div class="topbar-inner">
-          <div style="display:flex; gap:12px; align-items:flex-start;">
+          <div class="top-left">
             <button class="mobile-menu" onclick="toggleSidebar()" aria-label="Abrir menu">
               <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
@@ -805,245 +708,208 @@
             </button>
 
             <div>
-              <p class="eyebrow">Visão do associado</p>
-              <p class="top-title"><strong>Um painel para traduzir valor em linguagem de negócio.</strong> Menos espetáculo, mais clareza sobre como a solução pode ajudar o lojista e fazer sentido para a CDL.</p>
+              <p class="eyebrow">Painel Lojista • CDL Belo Horizonte</p>
+              <p class="top-title"><strong>Leitura rápida da carteira.</strong> Resultado recuperado, inadimplência, negociações, clientes em fluxo e próximos passos da operação.</p>
             </div>
           </div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn-secondary" onclick="scrollToSection('mensagem-cdl')">Ver mensagem pronta</button>
-            <button class="btn-primary" onclick="openRequestModal()">Levar para minha CDL</button>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn-secondary" href="/">Voltar ao painel CDL</a>
+            <a class="btn-primary" href="https://wa.me/5548984829654?text=Quero%20simular%20o%20painel%20do%20lojista%20da%20CDL%20BH" target="_blank" rel="noopener noreferrer">Simular cobrança</a>
           </div>
         </div>
       </header>
 
       <main class="main">
         <section class="hero">
-          <div class="hero-grid">
-            <div>
-              <p class="eyebrow">Painel do lojista</p>
-              <h1>Entenda a proposta e envie isso para a sua CDL</h1>
-              <p class="lead">
-                Este painel mostra, de forma simples, como uma estrutura de cobrança e negociação com IA pode apoiar o lojista,
-                melhorar a organização da operação e ampliar a percepção de valor da CDL junto aos associados.
-              </p>
+          <div class="hero-panel">
+            <p class="eyebrow">LOJISTA • MODA CENTRO PREMIUM</p>
+            <h1>Carteira acompanhada com IA e cobrança ativa</h1>
+            <p>
+              Painel operacional para o lojista acompanhar valores recuperados, clientes em negociação, inadimplência em aberto e retorno da régua de cobrança.
+            </p>
 
-              <div class="hero-actions">
-                <button class="btn-primary" onclick="openRequestModal()">Quero apresentar isso à minha CDL</button>
-                <a class="btn-secondary" href="/">Voltar para visão institucional</a>
-              </div>
+            <div class="hero-actions">
+              <a class="btn-primary" href="https://wa.me/5548984829654?text=Quero%20ativar%20essa%20opera%C3%A7%C3%A3o%20na%20CDL%20BH" target="_blank" rel="noopener noreferrer">Ativar na minha CDL</a>
+              <a class="btn-secondary" href="/painel-cliente">Ver lista de devedores</a>
+            </div>
+          </div>
 
-              <p class="hero-note">
-                Os números abaixo funcionam como cenário de referência para apresentação comercial e entendimento da oportunidade.
-              </p>
+          <div class="hero-aside hero-panel">
+            <span class="tag">Carteira ativa</span>
+
+            <div class="aside-stat">
+              <p class="label">Lojista</p>
+              <p class="value">Moda Centro</p>
+              <p class="sub">Associado ativo na operação</p>
             </div>
 
-            <div class="hero-side">
-              <div>
-                <p class="mini-kicker">Leitura executiva</p>
-                <h3>O que o lojista quer ver aqui</h3>
-              </div>
-
-              <div class="summary-points">
-                <div class="summary-row">
-                  <div class="dot"></div>
-                  <div>Se a proposta ajuda a reduzir esforço de cobrança e organizar melhor o processo.</div>
-                </div>
-                <div class="summary-row">
-                  <div class="dot"></div>
-                  <div>Se a CDL ganha mais utilidade percebida ao oferecer um serviço moderno para a base.</div>
-                </div>
-                <div class="summary-row">
-                  <div class="dot"></div>
-                  <div>Se vale a pena provocar uma conversa com a diretoria para avaliação e possível piloto.</div>
-                </div>
-              </div>
-
-              <div style="padding:14px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06);">
-                <span class="badge-soft">Material para sensibilização comercial</span>
-              </div>
+            <div class="aside-stat">
+              <p class="label">Recuperado no mês</p>
+              <p class="value">R$ 214 mil</p>
+              <p class="sub">Melhor resultado da base atual</p>
             </div>
           </div>
         </section>
 
-        <section class="grid-4">
-          <article class="card metric-card">
-            <p class="label">Recebimentos recuperados</p>
-            <p class="value">R$ 380 mil</p>
-            <p class="delta good">Cenário ilustrativo de referência para apresentação</p>
+        <section class="grid-kpis">
+          <article class="card">
+            <p class="kpi-label">Valor recuperado</p>
+            <p class="kpi-value">R$ 214 mil</p>
+            <p class="kpi-sub good">+16% vs mês anterior</p>
           </article>
 
-          <article class="card metric-card">
-            <p class="label">Redução da inadimplência</p>
-            <p class="value">-2,1 p.p.</p>
-            <p class="delta good">Indicador de melhoria operacional percebida</p>
+          <article class="card">
+            <p class="kpi-label">Clientes em negociação</p>
+            <p class="kpi-value">84</p>
+            <p class="kpi-sub">Carteira em fluxo ativo</p>
           </article>
 
-          <article class="card metric-card">
-            <p class="label">Prazo médio de negociação</p>
-            <p class="value">24 dias</p>
-            <p class="delta">Menor tempo de retorno e acompanhamento</p>
+          <article class="card">
+            <p class="kpi-label">Inadimplência atual</p>
+            <p class="kpi-value">8,4%</p>
+            <p class="kpi-sub good">-1,7 p.p. no período</p>
           </article>
 
-          <article class="card metric-card">
-            <p class="label">Leitura de retorno</p>
-            <p class="value">5,2x</p>
-            <p class="delta warn">Exemplo de potencial econômico em cenário de referência</p>
+          <article class="card">
+            <p class="kpi-label">ROI da operação</p>
+            <p class="kpi-value">5,1x</p>
+            <p class="kpi-sub warn">Retorno por real investido</p>
           </article>
         </section>
 
-        <section class="grid-2">
+        <section class="grid-main">
           <article class="card">
-            <div class="mini-kicker">Por que isso interessa ao lojista</div>
-            <h2 class="section-title">O valor precisa ser prático, não abstrato</h2>
-            <p class="section-intro">
-              Muitos empresários ainda resistem à IA quando ela aparece como conceito solto ou distante da operação. Aqui, a proposta precisa ser lida como aplicação concreta, ligada a caixa, processo e relacionamento com a CDL. [web:3]
-            </p>
-
-            <div class="impact-list">
-              <div class="impact-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>Menos esforço repetitivo</strong>
-                  <p>Uma operação estruturada ajuda a reduzir o peso manual da cobrança e organizar melhor fluxos de contato e acompanhamento.</p>
-                </div>
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Recebimentos por semana</h2>
+                <p class="section-sub">Leitura visual rápida da curva de recuperação e dos valores ainda em aberto.</p>
               </div>
+              <span class="mini-badge">Mês atual</span>
+            </div>
 
-              <div class="impact-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>Mais previsibilidade operacional</strong>
-                  <p>O lojista passa a visualizar processo, régua, status e evolução, em vez de depender apenas de ações isoladas e sem padrão.</p>
-                </div>
-              </div>
-
-              <div class="impact-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>Mais valor percebido na associação</strong>
-                  <p>Quando a CDL entrega algo aplicável ao dia a dia, a entidade deixa de ser vista só como apoio institucional e passa a ser vista como parceira de operação.</p>
-                </div>
-              </div>
+            <div class="chart-wrap">
+              <canvas id="lojistaChart"></canvas>
             </div>
           </article>
 
           <article class="card">
-            <div class="mini-kicker">Alerta de oportunidade</div>
-            <h2 class="section-title">O que normalmente se perde sem estrutura</h2>
-            <p class="section-intro">
-              Em vez de explorar medo com urgência artificial, esta seção ajuda o lojista a enxergar custo de oportunidade de forma objetiva.
-            </p>
-
-            <div class="opportunity-wrap">
-              <div class="op-card">
-                <p class="op-label">Valor potencial não tratado</p>
-                <p class="op-value">R$ 87,5 mil</p>
-                <p class="op-note">Estimativa ilustrativa de recebíveis sem abordagem organizada.</p>
-              </div>
-
-              <div class="op-card">
-                <p class="op-label">Clientes com chance de retorno</p>
-                <p class="op-value">47</p>
-                <p class="op-note">Casos que poderiam entrar em fluxo com régua definida.</p>
-              </div>
-
-              <div class="op-card">
-                <p class="op-label">Esforço mensal dedicado</p>
-                <p class="op-value">3 pessoas</p>
-                <p class="op-note">Carga operacional concentrada em cobrança manual e acompanhamento.</p>
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Indicadores da carteira</h2>
+                <p class="section-sub">Qualidade, velocidade e conversão da operação.</p>
               </div>
             </div>
-          </article>
-        </section>
 
-        <section class="grid-3">
-          <article class="card">
-            <div class="mini-kicker">Leitura visual</div>
-            <h2 class="section-title">Evolução estimada dos recebimentos</h2>
-            <p class="section-intro">
-              O gráfico serve como apoio executivo. Em dashboards escuros, o contraste e o uso controlado de acentos ajudam a leitura dos indicadores sem poluir a interface. [web:8]
-            </p>
+            <div class="mini-grid">
+              <div class="mini-stat">
+                <p class="label">Prazo médio de acordo</p>
+                <p class="value">9 dias</p>
+                <p class="sub good">Mais rápido</p>
+              </div>
+
+              <div class="mini-stat">
+                <p class="label">Conversão em acordos</p>
+                <p class="value">38%</p>
+                <p class="sub good">Acima da média</p>
+              </div>
+
+              <div class="mini-stat">
+                <p class="label">Resposta em 24h</p>
+                <p class="value">71%</p>
+                <p class="sub">Retorno inicial do contato</p>
+              </div>
+
+              <div class="mini-stat">
+                <p class="label">Ticket renegociado</p>
+                <p class="value">R$ 1,9 mil</p>
+                <p class="sub">Média por cliente</p>
+              </div>
+            </div>
+
             <div style="margin-top:16px;">
-              <canvas id="recebimentosChart" height="240"></canvas>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="mini-kicker">Base interessada</div>
-            <h2 class="section-title">Sinais de adesão mais críveis</h2>
-            <p class="section-intro">
-              Em vez de “lojistas digitando agora”, é melhor mostrar interesse por cidade, perfil ou estágio de conversa.
-            </p>
-
-            <div class="list-plain">
-              <div class="plain-row">
-                <div>
-                  <strong>Araranguá · varejo</strong>
-                  <span>Pedidos de apresentação da proposta</span>
+              <div class="rank-list">
+                <div class="rank-row">
+                  <div class="rank-num">A</div>
+                  <div>
+                    <strong>Canal com melhor retorno</strong>
+                    <span>WhatsApp com abordagem inicial</span>
+                  </div>
+                  <div class="rank-value">
+                    <strong>44%</strong>
+                    <span>Conversão</span>
+                  </div>
                 </div>
-                <div class="count-pill">12</div>
-              </div>
 
-              <div class="plain-row">
-                <div>
-                  <strong>Criciúma · serviços</strong>
-                  <span>Lojistas querendo levar à diretoria</span>
-                </div>
-                <div class="count-pill">8</div>
-              </div>
-
-              <div class="plain-row">
-                <div>
-                  <strong>Tubarão · comércio</strong>
-                  <span>Interesse em piloto e demonstração</span>
-                </div>
-                <div class="count-pill">15</div>
-              </div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="mini-kicker">Leitura comercial</div>
-            <h2 class="section-title">Por que a CDL tende a ouvir</h2>
-            <p class="section-intro">
-              A CDL já atua em serviços ligados a crédito, cobrança e proteção ao associado em várias regiões, então essa conversa não nasce do zero. [web:4][web:11][web:13]
-            </p>
-
-            <div class="attention-list">
-              <div class="attention-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>Já existe aderência institucional</strong>
-                  <p>Serviços de cobrança e recuperação já fazem parte do repertório de várias CDLs. [web:4][web:11][web:13]</p>
-                </div>
-              </div>
-
-              <div class="attention-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>IA entra como evolução, não ruptura</strong>
-                  <p>Isso torna a proposta mais fácil de explicar e menos ameaçadora para a gestão. [web:3]</p>
-                </div>
-              </div>
-
-              <div class="attention-item">
-                <div class="dot"></div>
-                <div>
-                  <strong>O lojista ajuda a abrir a porta</strong>
-                  <p>Quando a demanda parte da base, a diretoria tende a enxergar melhor o potencial de interesse local.</p>
+                <div class="rank-row">
+                  <div class="rank-num">B</div>
+                  <div>
+                    <strong>Faixa com mais recuperação</strong>
+                    <span>Débitos entre R$ 800 e R$ 2.500</span>
+                  </div>
+                  <div class="rank-value">
+                    <strong>52%</strong>
+                    <span>Do total</span>
+                  </div>
                 </div>
               </div>
             </div>
           </article>
         </section>
 
-        <section class="grid-2">
+        <section class="grid-bottom">
           <article class="card">
-            <div class="mini-kicker">Exemplo operacional</div>
-            <h2 class="section-title">Status de acordos e próximas ações</h2>
-            <p class="section-intro">
-              Aqui o painel fica mais útil quando mostra processo e clareza, não animações. Um bom dashboard precisa ajudar o usuário a escanear e reagir com rapidez. [web:8]
-            </p>
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Timeline da régua</h2>
+                <p class="section-sub">Eventos recentes da carteira em acompanhamento.</p>
+              </div>
+              <span class="mini-badge">Hoje</span>
+            </div>
+
+            <div class="timeline">
+              <div class="timeline-row">
+                <div class="time">09:14</div>
+                <div>
+                  <strong>Acordo confirmado</strong>
+                  <span>Cliente 10428 aceitou proposta de R$ 1.280 em 3 parcelas.</span>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="time">10:32</div>
+                <div>
+                  <strong>Nova negociação iniciada</strong>
+                  <span>Cliente 10391 respondeu ao WhatsApp e pediu nova condição de prazo.</span>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="time">11:48</div>
+                <div>
+                  <strong>Lembrete disparado</strong>
+                  <span>26 clientes receberam reforço automático de vencimento.</span>
+                </div>
+              </div>
+
+              <div class="timeline-row">
+                <div class="time">13:05</div>
+                <div>
+                  <strong>Pagamento identificado</strong>
+                  <span>Baixa automática confirmada para cliente 10277 no valor de R$ 2.140.</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Carteira em andamento</h2>
+                <p class="section-sub">Clientes priorizados, canal atual e próxima ação recomendada.</p>
+              </div>
+              <span class="mini-badge">84 em fluxo</span>
+            </div>
 
             <div class="table-wrap">
               <table>
@@ -1058,215 +924,241 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Maria da Silva</td>
+                    <td>Cliente 10428</td>
                     <td>WhatsApp</td>
                     <td>R$ 1.280</td>
-                    <td><span class="status good">Acordo em dia</span></td>
-                    <td>Lembrete leve antes do vencimento</td>
+                    <td><span class="status good">Acordo fechado</span></td>
+                    <td>Confirmar 1ª parcela</td>
                   </tr>
                   <tr>
-                    <td>João Pereira</td>
-                    <td>SMS</td>
-                    <td>R$ 840</td>
-                    <td><span class="status soft">Proposta enviada</span></td>
-                    <td>Aguardar retorno do cliente</td>
-                  </tr>
-                  <tr>
-                    <td>Ana Souza</td>
+                    <td>Cliente 10391</td>
                     <td>WhatsApp</td>
-                    <td>R$ 2.150</td>
-                    <td><span class="status attn">Renegociação sugerida</span></td>
-                    <td>Nova proposta com ajuste de prazo</td>
+                    <td>R$ 2.460</td>
+                    <td><span class="status attn">Renegociando</span></td>
+                    <td>Nova proposta hoje</td>
+                  </tr>
+                  <tr>
+                    <td>Cliente 10277</td>
+                    <td>SMS</td>
+                    <td>R$ 2.140</td>
+                    <td><span class="status good">Pago</span></td>
+                    <td>Baixa concluída</td>
+                  </tr>
+                  <tr>
+                    <td>Cliente 10112</td>
+                    <td>Email</td>
+                    <td>R$ 890</td>
+                    <td><span class="status soft">Sem resposta</span></td>
+                    <td>Escalar novo contato</td>
+                  </tr>
+                  <tr>
+                    <td>Cliente 10088</td>
+                    <td>WhatsApp</td>
+                    <td>R$ 3.720</td>
+                    <td><span class="status attn">Prioridade alta</span></td>
+                    <td>Acionar proposta especial</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </article>
-
-          <article class="card" id="mensagem-cdl">
-            <div class="mini-kicker">Pronto para encaminhar</div>
-            <h2 class="section-title">Mensagem-base para enviar à CDL</h2>
-            <p class="section-intro">
-              O objetivo final deste painel é facilitar a conversa com a diretoria. O melhor CTA aqui é permitir que o lojista copie e envie uma mensagem séria, curta e objetiva.
-            </p>
-
-            <div class="message-box" id="inlineMessageBox">Presidente, tudo bem?
-
-Quero sugerir que a CDL conheça esta proposta de cobrança e negociação com IA voltada aos associados. A solução me chamou atenção porque pode ajudar o lojista com mais organização no processo de cobrança e, ao mesmo tempo, ampliar o valor percebido da entidade.
-
-Se fizer sentido, vale uma apresentação para entender melhor como isso poderia funcionar na nossa cidade.</div>
-
-            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
-              <button class="btn-primary" onclick="openRequestModal()">Personalizar com nome da CDL</button>
-              <button class="btn-secondary" onclick="copyInlineMessage()">Copiar texto</button>
-            </div>
-          </article>
         </section>
 
-        <section class="cta-band">
-          <div>
-            <p class="eyebrow">Próxima ação</p>
-            <h2>Se isso faz sentido para o seu negócio, leve para sua CDL</h2>
-            <p>
-              O painel não precisa provar tudo sozinho. Ele precisa ser claro o bastante para abrir uma conversa séria com a diretoria e avançar para uma apresentação objetiva.
-            </p>
-          </div>
+        <section class="grid-main">
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Comparativo da base</h2>
+                <p class="section-sub">Como este lojista performa frente aos demais associados ativos.</p>
+              </div>
+              <span class="mini-badge">Ranking da CDL</span>
+            </div>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn-primary" onclick="openRequestModal()">Gerar mensagem para a CDL</button>
-            <a class="btn-secondary" href="https://wa.me/5548984829654?text=Ol%C3%A1%2C%20quero%20apresentar%20essa%20proposta%20para%20a%20minha%20CDL" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
-          </div>
+            <div class="rank-list">
+              <div class="rank-row">
+                <div class="rank-num">1</div>
+                <div>
+                  <strong>Moda Centro</strong>
+                  <span>Maior valor recuperado do mês</span>
+                </div>
+                <div class="rank-value">
+                  <strong>R$ 214 mil</strong>
+                  <span>ROI 5,1x</span>
+                </div>
+              </div>
+
+              <div class="rank-row">
+                <div class="rank-num">2</div>
+                <div>
+                  <strong>Drogaria Central BH</strong>
+                  <span>Maior taxa de acordo</span>
+                </div>
+                <div class="rank-value">
+                  <strong>R$ 186 mil</strong>
+                  <span>ROI 4,7x</span>
+                </div>
+              </div>
+
+              <div class="rank-row">
+                <div class="rank-num">3</div>
+                <div>
+                  <strong>Auto Peças Pampulha</strong>
+                  <span>Maior crescimento mensal</span>
+                </div>
+                <div class="rank-value">
+                  <strong>R$ 163 mil</strong>
+                  <span>ROI 4,3x</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="section-head">
+              <div>
+                <h2 class="section-title">Ação do lojista</h2>
+                <p class="section-sub">Bloco final para reforçar ativação e apresentação à CDL.</p>
+              </div>
+            </div>
+
+            <div class="rank-list">
+              <div class="rank-row">
+                <div class="rank-num">+</div>
+                <div>
+                  <strong>Mais caixa recuperado</strong>
+                  <span>Régua ativa e acompanhamento contínuo</span>
+                </div>
+                <div class="rank-value">
+                  <strong>R$ 214 mil</strong>
+                  <span>No mês</span>
+                </div>
+              </div>
+
+              <div class="rank-row">
+                <div class="rank-num">%</div>
+                <div>
+                  <strong>Menor pressão manual</strong>
+                  <span>Equipe menos travada em cobrança repetitiva</span>
+                </div>
+                <div class="rank-value">
+                  <strong>-1,7 p.p.</strong>
+                  <span>Inadimplência</span>
+                </div>
+              </div>
+
+              <div class="rank-row">
+                <div class="rank-num">IA</div>
+                <div>
+                  <strong>Estrutura pronta para a CDL</strong>
+                  <span>Operação escalável para mais associados</span>
+                </div>
+                <div class="rank-value">
+                  <strong>84</strong>
+                  <span>Clientes em fluxo</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
+              <a class="btn-primary" href="https://wa.me/5548984829654?text=Quero%20levar%20essa%20opera%C3%A7%C3%A3o%20para%20a%20CDL%20de%20Belo%20Horizonte" target="_blank" rel="noopener noreferrer">Levar para minha CDL</a>
+              <a class="btn-secondary" href="/painel-cliente">Abrir lista de devedores</a>
+            </div>
+          </article>
         </section>
       </main>
     </div>
   </div>
 
-  <a
-    class="btn-primary floating-whats"
-    href="https://wa.me/5548984829654?text=Ol%C3%A1%2C%20quero%20levar%20essa%20proposta%20para%20a%20minha%20CDL"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  <a class="btn-primary floating-whats" href="https://wa.me/5548984829654?text=Quero%20entender%20o%20painel%20do%20lojista%20da%20CDL%20BH" target="_blank" rel="noopener noreferrer">
     WhatsApp
   </a>
 
-  <div class="modal-backdrop" id="requestModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h3>Gerar mensagem para sua CDL</h3>
-        <button onclick="closeRequestModal()" aria-label="Fechar" style="background:none;color:#94a3b8;font-size:24px;">&times;</button>
-      </div>
-
-      <div class="modal-body">
-        <p>
-          Informe o nome da CDL para montar uma mensagem pronta para envio. A proposta é facilitar o contato de forma simples e profissional.
-        </p>
-
-        <label class="field-label" for="cdlName">Nome da CDL</label>
-        <input class="field" id="cdlName" type="text" placeholder="Ex.: CDL Araranguá" oninput="updateMessagePreview()" />
-
-        <div class="message-box" id="modalMessageBox"></div>
-      </div>
-
-      <div class="modal-foot" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);">
-        <button class="btn-secondary" onclick="copyModalMessage()">Copiar mensagem</button>
-        <a class="btn-primary" id="modalWhatsLink" href="#" target="_blank" rel="noopener noreferrer">Enviar no WhatsApp</a>
-      </div>
-    </div>
-  </div>
-
   <script>
     const sidebar = document.getElementById('sidebar');
-    const modal = document.getElementById('requestModal');
-    const cdlInput = document.getElementById('cdlName');
-    const modalMessageBox = document.getElementById('modalMessageBox');
-    const modalWhatsLink = document.getElementById('modalWhatsLink');
-    const inlineMessageBox = document.getElementById('inlineMessageBox');
-
-    function buildMessage(cdlName) {
-      const cdl = cdlName && cdlName.trim() ? cdlName.trim() : 'CDL da minha cidade';
-      return `Presidente, tudo bem?
-
-Quero sugerir que a ${cdl} conheça esta proposta de cobrança e negociação com IA voltada aos associados. A solução me chamou atenção porque pode ajudar o lojista com mais organização no processo de cobrança e, ao mesmo tempo, ampliar o valor percebido da entidade.
-
-Se fizer sentido, vale uma apresentação para entender melhor como isso poderia funcionar na nossa cidade.`;
-    }
-
-    function openRequestModal() {
-      modal.classList.add('open');
-      updateMessagePreview();
-      setTimeout(() => cdlInput.focus(), 60);
-    }
-
-    function closeRequestModal() {
-      modal.classList.remove('open');
-    }
-
-    function updateMessagePreview() {
-      const message = buildMessage(cdlInput.value);
-      modalMessageBox.textContent = message;
-      modalWhatsLink.href = `https://wa.me/5548984829654?text=${encodeURIComponent(message)}`;
-    }
-
-    function copyText(text) {
-      navigator.clipboard.writeText(text);
-    }
-
-    function copyInlineMessage() {
-      copyText(inlineMessageBox.textContent.trim());
-    }
-
-    function copyModalMessage() {
-      copyText(modalMessageBox.textContent.trim());
-    }
-
-    function scrollToSection(id) {
-      const target = document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
 
     function toggleSidebar() {
       sidebar.classList.toggle('open');
     }
 
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeRequestModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeRequestModal();
-    });
-
-    updateMessagePreview();
-
-    new Chart(document.getElementById('recebimentosChart'), {
-      type: 'line',
-      data: {
-        labels: ['Mês 1', 'Mês 2', 'Mês 3', 'Mês 4', 'Mês 5', 'Mês 6'],
-        datasets: [{
-          label: 'Recebimentos acompanhados',
-          data: [72, 88, 104, 126, 149, 173],
-          borderColor: '#8fb9b3',
-          backgroundColor: 'rgba(143,185,179,0.10)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.34,
-          pointRadius: 3,
-          pointHoverRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#9aa7b7',
-              boxWidth: 10,
-              boxHeight: 10,
-              font: { size: 11 }
+    const lojistaChartEl = document.getElementById('lojistaChart');
+    if (lojistaChartEl) {
+      new Chart(lojistaChartEl, {
+        type: 'line',
+        data: {
+          labels: ['Sem 01', 'Sem 02', 'Sem 03', 'Sem 04'],
+          datasets: [
+            {
+              label: 'Recuperado',
+              data: [42000, 51000, 58000, 63000],
+              borderColor: 'rgba(97,193,143,1)',
+              backgroundColor: 'rgba(97,193,143,0.14)',
+              fill: true,
+              tension: 0.36,
+              pointRadius: 3,
+              pointHoverRadius: 5,
+              borderWidth: 2.5
+            },
+            {
+              label: 'Em aberto',
+              data: [97000, 89000, 76000, 69000],
+              borderColor: 'rgba(216,176,111,1)',
+              backgroundColor: 'rgba(216,176,111,0.08)',
+              fill: true,
+              tension: 0.36,
+              pointRadius: 3,
+              pointHoverRadius: 5,
+              borderWidth: 2.5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#9aa7b7',
+                boxWidth: 10,
+                boxHeight: 10,
+                font: { size: 11 }
+              }
+            },
+            tooltip: {
+              backgroundColor: '#0f141b',
+              borderColor: 'rgba(255,255,255,0.08)',
+              borderWidth: 1,
+              titleColor: '#ffffff',
+              bodyColor: '#d9e2eb',
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': R$ ' + context.raw.toLocaleString('pt-BR');
+                }
+              }
             }
           },
-          tooltip: {
-            backgroundColor: '#0f141b',
-            borderColor: 'rgba(255,255,255,0.08)',
-            borderWidth: 1,
-            titleColor: '#ffffff',
-            bodyColor: '#d9e2eb'
-          }
-        },
-        scales: {
-          x: {
-            ticks: { color: '#7f8a98' },
-            grid: { color: 'rgba(255,255,255,0.04)' }
-          },
-          y: {
-            ticks: { color: '#7f8a98' },
-            grid: { color: 'rgba(255,255,255,0.04)' }
+          scales: {
+            x: {
+              ticks: { color: '#7f8a98' },
+              grid: { color: 'rgba(255,255,255,0.03)' }
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                color: '#7f8a98',
+                callback: function(value) {
+                  return 'R$ ' + (value / 1000) + 'k';
+                }
+              },
+              grid: { color: 'rgba(255,255,255,0.04)' }
+            }
           }
         }
-      }
-    });
+      });
+    }
   </script>
 </body>
 </html>

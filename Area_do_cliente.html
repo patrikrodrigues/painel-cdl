@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Área do Cliente | Acompanhe sua negociação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --surface: #121820;
+      --surface-2: #171e27;
+      --surface-3: #0f141b;
+      --line: rgba(255,255,255,0.08);
+      --line-strong: rgba(255,255,255,0.14);
+      --text: #edf3f9;
+      --muted: #9aa7b7;
+      --faint: #6f7c8c;
+      --primary: #176b63;
+      --primary-hover: #12584f;
+      --primary-soft: rgba(23,107,99,0.14);
+      --success: #61c18f;
+      --warn: #d8b06f;
+      --danger: #d97b7b;
+      --container: 1180px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.28);
+    }
+
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { border: 0; cursor: pointer; }
+    img, svg { display: block; max-width: 100%; }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(23,107,99,.12), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(255,255,255,.03), transparent 18%),
+        var(--bg);
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 24px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(11,15,20,.88);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #204b47, #163633);
+      color: #e7f5f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      letter-spacing: .04em;
+      flex: 0 0 auto;
+    }
+
+    .brand p { margin: 0; }
+    .kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: #93bcb6;
+      margin-bottom: 3px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      color: #dbe7f1;
+      white-space: nowrap;
+    }
+
+    .main {
+      padding: 22px 0 40px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) 360px;
+      gap: 16px;
+    }
+
+    .panel, .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+    }
+
+    .panel {
+      padding: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(23,107,99,.14), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        var(--surface);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.04;
+      letter-spacing: -.03em;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      color: #dfe8f2;
+    }
+
+    .tag.good {
+      background: rgba(97,193,143,.12);
+      border-color: rgba(97,193,143,.22);
+      color: #c7ecd6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn-primary, .btn-secondary, .btn-ghost {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #eefaf8;
+    }
+
+    .btn-primary:hover { background: var(--primary-hover); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,.05); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px dashed rgba(255,255,255,.14);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,.24);
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      padding: 22px;
+    }
+
+    .side-card {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .side-label {
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .side-value {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    .side-sub {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .grid-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .kpi-label {
+      margin: 0 0 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+
+    .kpi-value {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    .kpi-sub {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .good { color: #a7dfc4; }
+    .warn { color: #e8cb96; }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 56ch;
+    }
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      font-size: 12px;
+      font-weight: 700;
+      color: #e6edf6;
+      white-space: nowrap;
+    }
+
+    .parcelas {
+      display: grid;
+      gap: 10px;
+    }
+
+    .parcela {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .parcela-main strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .parcela-main span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 108px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .status-paid {
+      background: rgba(97,193,143,.12);
+      border-color: rgba(97,193,143,.22);
+      color: #c7ecd6;
+    }
+
+    .status-open {
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
+      color: #dbe4ee;
+    }
+
+    .status-due {
+      background: rgba(216,176,111,.12);
+      border-color: rgba(216,176,111,.22);
+      color: #f1d39d;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .timeline-time {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .timeline-content strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .timeline-content span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .payment-list, .help-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .option-row, .help-row {
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--surface-2);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .option-row strong,
+    .help-row strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .option-row span,
+    .help-row span {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .option-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .summary-box {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(23,107,99,.12);
+      border: 1px solid rgba(23,107,99,.22);
+    }
+
+    .summary-box p {
+      margin: 0;
+      font-size: 13px;
+      color: #d8efeb;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .grid-kpis,
+      .grid-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero .panel,
+      .card {
+        padding: 18px;
+      }
+
+      .grid-kpis {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-row,
+      .parcela {
+        grid-template-columns: 1fr;
+      }
+
+      .secure-badge {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-mark">CDL</div>
+          <div>
+            <p class="kicker">Área do Cliente</p>
+            <p class="brand-title">Negociação segura da sua pendência</p>
+            <p class="brand-sub">Atendimento digital vinculado à CDL Belo Horizonte e à loja Moda Centro.</p>
+          </div>
+        </div>
+
+        <div class="secure-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4Z"/>
+          </svg>
+          Ambiente seguro para acompanhamento e pagamento
+        </div>
+      </div>
+    </header>
+
+    <main class="container main">
+      <section class="hero">
+        <div class="panel">
+          <p class="kicker">Olá, Maria da Silva</p>
+          <h1>Sua negociação está em andamento</h1>
+          <p>Você possui um acordo ativo referente à loja <strong style="color:#fff;">Moda Centro</strong>. Nesta página você pode acompanhar parcelas, consultar as condições da negociação, acessar seus links de pagamento e falar com o atendimento quando precisar.</p>
+
+          <div class="tags">
+            <span class="tag good">Acordo ativo</span>
+            <span class="tag">1 parcela já paga</span>
+            <span class="tag">Próximo vencimento em 12 Abr 2026</span>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="#">Pagar próxima parcela</a>
+            <a class="btn-secondary" href="#">Baixar comprovante</a>
+            <a class="btn-ghost" href="#">Falar com atendimento</a>
+          </div>
+        </div>
+
+        <div class="panel hero-side">
+          <div class="side-card">
+            <p class="side-label">Saldo em aberto</p>
+            <p class="side-value">R$ 960</p>
+            <p class="side-sub">Restante do acordo após a confirmação da primeira parcela.</p>
+          </div>
+
+          <div class="side-card">
+            <p class="side-label">Condição atual</p>
+            <p class="side-value">4x de R$ 320</p>
+            <p class="side-sub">Condição validada para facilitar a regularização sem perder prazo de acompanhamento.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-kpis">
+        <article class="card">
+          <p class="kpi-label">Valor original</p>
+          <p class="kpi-value">R$ 1.520</p>
+          <p class="kpi-sub">Valor inicialmente em aberto antes da negociação.</p>
+        </article>
+
+        <article class="card">
+          <p class="kpi-label">Valor negociado</p>
+          <p class="kpi-value">R$ 1.280</p>
+          <p class="kpi-sub good">Desconto aplicado na formalização do acordo.</p>
+        </article>
+
+        <article class="card">
+          <p class="kpi-label">Parcela paga</p>
+          <p class="kpi-value">R$ 320</p>
+          <p class="kpi-sub">Pagamento já identificado no sistema.</p>
+        </article>
+
+        <article class="card">
+          <p class="kpi-label">Próximo vencimento</p>
+          <p class="kpi-value">12 Abr</p>
+          <p class="kpi-sub warn">Recomendamos pagamento até a data para manter o acordo ativo.</p>
+        </article>
+      </section>
+
+      <section class="grid-main">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Parcelas do seu acordo</h2>
+              <p class="section-sub">Acompanhe abaixo o andamento das parcelas e escolha a próxima ação.</p>
+            </div>
+            <span class="mini-badge">4 parcelas</span>
+          </div>
+
+          <div class="parcelas">
+            <div class="parcela">
+              <div class="parcela-main">
+                <strong>Parcela 1 • R$ 320</strong>
+                <span>Vencimento em 02 Mar 2026 • Pagamento confirmado e baixado com sucesso.</span>
+              </div>
+              <span class="status status-paid">Paga</span>
+            </div>
+
+            <div class="parcela">
+              <div class="parcela-main">
+                <strong>Parcela 2 • R$ 320</strong>
+                <span>Vencimento em 12 Abr 2026 • Link disponível para pagamento antecipado.</span>
+              </div>
+              <span class="status status-due">Próxima</span>
+            </div>
+
+            <div class="parcela">
+              <div class="parcela-main">
+                <strong>Parcela 3 • R$ 320</strong>
+                <span>Vencimento previsto para 12 Mai 2026 • Liberada após quitação da parcela anterior.</span>
+              </div>
+              <span class="status status-open">Aguardando</span>
+            </div>
+
+            <div class="parcela">
+              <div class="parcela-main">
+                <strong>Parcela 4 • R$ 320</strong>
+                <span>Vencimento previsto para 12 Jun 2026 • Encerramento do acordo após confirmação.</span>
+              </div>
+              <span class="status status-open">Aguardando</span>
+            </div>
+          </div>
+
+          <div class="summary-box">
+            <p>Se preferir, você pode antecipar a próxima parcela ou falar com o atendimento para revisar a condição atual antes do vencimento.</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Formas de pagamento</h2>
+              <p class="section-sub">Escolha a opção mais adequada para seguir com sua regularização.</p>
+            </div>
+          </div>
+
+          <div class="payment-list">
+            <div class="option-row">
+              <strong>Pagar próxima parcela</strong>
+              <span>Gere o link da parcela atual para pagamento imediato em ambiente seguro.</span>
+              <div class="option-actions">
+                <a class="btn-primary" href="#">Gerar link de pagamento</a>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <strong>Quitar saldo total</strong>
+              <span>Consulte a opção de pagamento integral para encerrar o acordo antecipadamente.</span>
+              <div class="option-actions">
+                <a class="btn-secondary" href="#">Ver opção de quitação</a>
+              </div>
+            </div>
+
+            <div class="option-row">
+              <strong>Baixar comprovantes</strong>
+              <span>Acesse os comprovantes dos pagamentos identificados nesta negociação.</span>
+              <div class="option-actions">
+                <a class="btn-secondary" href="#">Baixar comprovante</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid-main">
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Histórico da negociação</h2>
+              <p class="section-sub">Resumo dos principais eventos desta negociação para você acompanhar com clareza.</p>
+            </div>
+            <span class="mini-badge">Atualizado</span>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-time">02 Mar 2026<br>09:12</div>
+              <div class="timeline-content">
+                <strong>Primeiro aviso enviado</strong>
+                <span>Você recebeu uma mensagem inicial informando sobre a pendência e os canais disponíveis para negociação.</span>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-time">02 Mar 2026<br>09:18</div>
+              <div class="timeline-content">
+                <strong>Solicitação de parcelamento</strong>
+                <span>Foi registrado o pedido de uma condição parcelada para regularização do valor em aberto.</span>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-time">02 Mar 2026<br>09:20</div>
+              <div class="timeline-content">
+                <strong>Acordo formalizado</strong>
+                <span>A negociação foi confirmada em 4 parcelas de R$ 320 com registro desta condição no sistema.</span>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-time">02 Mar 2026<br>09:27</div>
+              <div class="timeline-content">
+                <strong>Primeira parcela identificada</strong>
+                <span>O pagamento da primeira parcela foi reconhecido e o acordo permaneceu ativo.</span>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-time">09 Abr 2026<br>08:00</div>
+              <div class="timeline-content">
+                <strong>Lembrete da próxima parcela</strong>
+                <span>Será enviado um aviso de vencimento com antecedência para facilitar o acompanhamento.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Precisa de ajuda?</h2>
+              <p class="section-sub">Se tiver dúvidas sobre a negociação, pagamento ou comprovante, use um dos canais abaixo.</p>
+            </div>
+          </div>
+
+          <div class="help-list">
+            <div class="help-row">
+              <strong>Atendimento por WhatsApp</strong>
+              <span>Fale com o suporte para tirar dúvidas sobre parcelas, vencimentos e opções disponíveis.</span>
+              <div class="option-actions">
+                <a class="btn-primary" href="https://wa.me/5548984829654?text=Ol%C3%A1%2C%20preciso%20de%20ajuda%20na%20minha%20negocia%C3%A7%C3%A3o" target="_blank" rel="noopener noreferrer">Abrir atendimento</a>
+              </div>
+            </div>
+
+            <div class="help-row">
+              <strong>Revisar condição da negociação</strong>
+              <span>Caso precise atualizar sua condição, solicite análise antes do vencimento da próxima parcela.</span>
+              <div class="option-actions">
+                <a class="btn-secondary" href="#">Solicitar revisão</a>
+              </div>
+            </div>
+
+            <div class="help-row">
+              <strong>Segurança da sua negociação</strong>
+              <span>Esta área concentra as informações da negociação para que você acompanhe tudo em um ambiente único e com mais clareza.</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="footer-note">
+        Esta área foi disponibilizada para facilitar o acompanhamento da negociação, consulta de parcelas e acesso às opções de pagamento. Em caso de dúvida, utilize apenas os links e canais informados nesta página.
+      </section>
+    </main>
+  </div>
+</body>
+</html>

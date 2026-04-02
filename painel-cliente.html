@@ -2,681 +2,672 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Perfil do Cliente | CDL Belo Horizonte</title>
+  <title>Perfil do Cliente • Negociação em Andamento</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg: #0b0f14;
-      --surface: #121820;
-      --surface-2: #171e27;
-      --surface-3: #0f141b;
-      --line: rgba(255,255,255,0.08);
-      --line-strong: rgba(255,255,255,0.14);
-      --text: #edf3f9;
-      --muted: #9aa7b7;
-      --faint: #6f7c8c;
-      --primary: #176b63;
-      --primary-hover: #12584f;
-      --primary-soft: rgba(23,107,99,0.15);
-      --success: #61c18f;
-      --danger: #d97b7b;
-      --warn: #d8b06f;
-      --shadow: 0 20px 60px rgba(0,0,0,0.28);
-      --container: 1320px;
-    }
-
-    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
-    body { overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
-    button { border: 0; cursor: pointer; }
-    img, canvas, svg { display: block; max-width: 100%; }
-
-    .shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 250px 1fr;
-    }
-
-    .sidebar {
-      background: rgba(8,11,15,0.95);
-      border-right: 1px solid var(--line);
-      padding: 18px 14px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 6px 18px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 18px;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #204b47, #163633);
-      color: #e6f5f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      letter-spacing: .04em;
-    }
-
-    .brand p { margin: 0; }
-    .brand .kicker {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: .16em;
-      color: #96c1ba;
-      margin-bottom: 3px;
-    }
-    .brand .title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .nav-group-title {
-      padding: 0 10px;
-      margin: 0 0 8px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--faint);
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      color: var(--muted);
-      border: 1px solid transparent;
-      transition: .18s ease;
-      margin-bottom: 6px;
-    }
-
-    .nav-link:hover {
-      background: rgba(255,255,255,.03);
-      border-color: var(--line);
-      color: var(--text);
+    :root{
+      --bg:#081019;
+      --panel:#0e1722;
+      --panel-2:#121d2a;
+      --panel-3:#172434;
+      --line:rgba(255,255,255,.08);
+      --line-2:rgba(255,255,255,.14);
+      --text:#edf4fb;
+      --muted:#97a6b7;
+      --soft:#6f8095;
+      --green:#1f8f74;
+      --green-soft:rgba(65,198,154,.12);
+      --yellow:#d9af64;
+      --yellow-soft:rgba(217,175,100,.12);
+      --red:#d77a7a;
+      --red-soft:rgba(215,122,122,.12);
+      --blue:#6fa8ff;
+      --blue-soft:rgba(111,168,255,.12);
+      --shadow:0 24px 64px rgba(0,0,0,.28);
+      --container:1480px;
+    }
+
+    *{box-sizing:border-box;font-family:'Inter',sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text)}
+    body{overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    button{cursor:pointer;border:0}
+    img,svg{display:block;max-width:100%}
+    table{width:100%;border-collapse:collapse}
+
+    .layout{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:260px 1fr;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:0;
+      height:100vh;
+      background:linear-gradient(180deg,#09111a 0%,#0b131d 100%);
+      border-right:1px solid var(--line);
+      padding:18px 14px;
+      z-index:20;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:6px 8px 18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background:linear-gradient(180deg,#2b645c,#1a423d);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;color:#effcf8;letter-spacing:.04em
+    }
+
+    .brand small{
+      display:block;
+      margin-bottom:4px;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:#8fbbb3;
+    }
+
+    .brand strong{
+      display:block;
+      font-size:16px;
+      font-weight:800;
+      color:#fff;
+      line-height:1.1;
+    }
+
+    .section-label{
+      margin:0 0 8px;
+      padding:0 10px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--soft);
+    }
+
+    .nav-link{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      color:var(--muted);
+      font-size:14px;
+      transition:.18s ease;
+      margin-bottom:6px;
+    }
+
+    .nav-link:hover{
+      background:rgba(255,255,255,.03);
+      border-color:var(--line);
+      color:var(--text);
     }
 
-    .nav-link.active {
-      background: rgba(255,255,255,.04);
-      border-color: var(--line-strong);
-      color: #fff;
+    .nav-link.active{
+      background:rgba(255,255,255,.04);
+      border-color:var(--line-2);
+      color:#fff;
     }
 
-    .sidebar-box {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.02);
-      border: 1px solid var(--line);
+    .sidebar-card{
+      margin-top:18px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--line);
     }
 
-    .sidebar-box p {
-      margin: 0;
-      font-size: 12px;
-      line-height: 1.55;
-      color: var(--muted);
+    .sidebar-card p{
+      margin:0;
+      font-size:12px;
+      line-height:1.6;
+      color:var(--muted);
     }
 
-    .content {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
+    .content{
+      min-width:0;
+      display:flex;
+      flex-direction:column;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(16px);
-      background: rgba(11,15,20,.88);
-      border-bottom: 1px solid var(--line);
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:15;
+      backdrop-filter:blur(16px);
+      background:rgba(8,16,25,.88);
+      border-bottom:1px solid var(--line);
     }
 
-    .topbar-inner, .main {
-      width: min(var(--container), calc(100% - 28px));
-      margin: 0 auto;
+    .topbar-inner,.main{
+      width:min(var(--container),calc(100% - 28px));
+      margin:0 auto;
     }
 
-    .topbar-inner {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 0;
+    .topbar-inner{
+      min-height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
     }
 
-    .mobile-menu {
-      display: none;
+    .top-info{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
     }
 
-    .top-left {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
+    .eyebrow{
+      margin:0 0 4px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#90bcb4;
     }
 
-    .eyebrow {
-      margin: 0 0 4px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .14em;
-      color: #93bcb6;
+    .top-info p:last-child{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.45;
     }
 
-    .top-title {
-      margin: 0;
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.45;
+    .top-info strong{color:#fff}
+
+    .btn,.btn-outline{
+      min-height:40px;
+      padding:0 15px;
+      border-radius:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
+      transition:.18s ease;
+    }
+
+    .btn{
+      background:var(--green);
+      color:#effcf8;
+    }
+
+    .btn:hover{background:#176f5b}
+
+    .btn-outline{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line-2);
+      color:var(--text);
     }
 
-    .top-title strong { color: #fff; }
+    .btn-outline:hover{background:rgba(255,255,255,.05)}
 
-    .btn-primary, .btn-secondary {
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      white-space: nowrap;
-      transition: .18s ease;
+    .main{
+      padding:18px 0 34px;
+      display:grid;
+      gap:16px;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #eefaf8;
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.16);
+      min-width:0;
     }
 
-    .btn-primary:hover { background: var(--primary-hover); }
+    .hero{
+      padding:18px 20px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:16px;
+      align-items:stretch;
+    }
+
+    .hero h1{
+      margin:0;
+      font-size:28px;
+      line-height:1.08;
+      letter-spacing:-.03em;
+    }
 
-    .btn-secondary {
-      background: rgba(255,255,255,.03);
-      border: 1px solid var(--line-strong);
-      color: var(--text);
+    .hero p{
+      margin:8px 0 0;
+      font-size:14px;
+      line-height:1.6;
+      color:var(--muted);
+      max-width:74ch;
     }
 
-    .btn-secondary:hover { background: rgba(255,255,255,.05); }
+    .hero-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
 
-    .main {
-      padding: 22px 0 34px;
-      display: grid;
-      gap: 16px;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.06);
+      color:#dce6f0;
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) 360px;
-      gap: 16px;
+    .badge.good{
+      background:var(--green-soft);
+      border-color:rgba(65,198,154,.2);
+      color:#c6efdf;
     }
 
-    .hero-panel, .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+    .badge.warn{
+      background:var(--yellow-soft);
+      border-color:rgba(217,175,100,.2);
+      color:#f0d39a;
     }
 
-    .hero-panel {
-      padding: 24px;
-      min-width: 0;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top right, rgba(23,107,99,.14), transparent 28%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        var(--surface);
+    .hero-side{
+      display:grid;
+      gap:12px;
     }
 
-    .hero-head {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
+    .mini-panel{
+      padding:14px 16px;
+      border-radius:16px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
     }
 
-    .avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, #204b47, #163633);
-      color: #ecfaf7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: 800;
-      flex: 0 0 auto;
+    .mini-panel small{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
     }
 
-    .hero-panel h1 {
-      margin: 0;
-      font-size: clamp(26px, 3.5vw, 38px);
-      line-height: 1.04;
-      letter-spacing: -.03em;
+    .mini-panel strong{
+      display:block;
+      font-size:24px;
+      line-height:1;
+      letter-spacing:-.03em;
+      font-variant-numeric:tabular-nums lining-nums;
     }
 
-    .hero-panel p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 62ch;
+    .mini-panel span{
+      display:block;
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
+    .kpi-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
     }
 
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.06);
-      color: #dfe8f2;
+    .kpi{
+      padding:18px;
     }
 
-    .tag.good {
-      background: rgba(97,193,143,.12);
-      border-color: rgba(97,193,143,.22);
-      color: #c7ecd6;
+    .label{
+      margin:0 0 10px;
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
     }
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
+    .value{
+      margin:0;
+      font-size:32px;
+      line-height:1;
+      font-weight:800;
+      letter-spacing:-.04em;
+      font-variant-numeric:tabular-nums lining-nums;
     }
 
-    .hero-aside {
-      padding: 22px;
-      display: grid;
-      gap: 14px;
-      align-content: start;
+    .sub{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
     }
 
-    .hero-aside .tagline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      width: fit-content;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--primary-soft);
-      color: #d9f1ed;
-      font-size: 12px;
-      font-weight: 700;
+    .sub.good{color:#a7dfc8}
+    .sub.warn{color:#f0d39a}
+    .sub.bad{color:#e3a0a0}
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:16px;
     }
 
-    .aside-stat {
-      padding: 16px;
-      border-radius: 16px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,.06);
+    .bottom-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
     }
 
-    .aside-stat .label {
-      margin: 0 0 8px;
-      font-size: 12px;
-      color: var(--muted);
+    .panel-body{
+      padding:18px;
     }
 
-    .aside-stat .value {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -.03em;
-      font-variant-numeric: tabular-nums lining-nums;
+    .head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
     }
 
-    .aside-stat .sub {
-      margin-top: 8px;
-      font-size: 13px;
-      color: var(--muted);
+    .head h2{
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
     }
 
-    .grid-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
+    .head p{
+      margin:4px 0 0;
+      font-size:13px;
+      line-height:1.55;
+      color:var(--muted);
+      max-width:54ch;
     }
 
-    .card {
-      padding: 20px;
-      min-width: 0;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      color:#e6edf6;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
     }
 
-    .kpi-label {
-      margin: 0 0 10px;
-      font-size: 12px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .08em;
+    .list{
+      display:grid;
+      gap:10px;
     }
 
-    .kpi-value {
-      margin: 0;
-      font-size: 34px;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: -.03em;
-      font-variant-numeric: tabular-nums lining-nums;
+    .list-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:14px;
+      border-radius:14px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
     }
 
-    .kpi-sub {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
+    .list-row strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:4px;
     }
 
-    .good { color: #a7dfc4; }
-    .warn { color: #e8cb96; }
+    .list-row span{
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.5;
+    }
 
-    .grid-main {
-      display: grid;
-      grid-template-columns: 1.3fr .9fr;
-      gap: 16px;
+    .status{
+      min-width:110px;
+      min-height:34px;
+      padding:0 12px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      color:#dce6f0;
     }
 
-    .grid-bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .status.good{
+      background:var(--green-soft);
+      border-color:rgba(65,198,154,.2);
+      color:#c6efdf;
     }
 
-    .section-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
+    .status.warn{
+      background:var(--yellow-soft);
+      border-color:rgba(217,175,100,.2);
+      color:#f0d39a;
     }
 
-    .section-title {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.2;
+    .status.bad{
+      background:var(--red-soft);
+      border-color:rgba(215,122,122,.2);
+      color:#efb1b1;
     }
 
-    .section-sub {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-      max-width: 54ch;
+    .status.info{
+      background:var(--blue-soft);
+      border-color:rgba(111,168,255,.2);
+      color:#cfe0ff;
     }
 
-    .mini-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: rgba(255,255,255,.05);
-      color: #e7eef6;
-      white-space: nowrap;
+    .timeline{
+      display:grid;
+      gap:12px;
     }
 
-    .timeline {
-      display: grid;
-      gap: 10px;
+    .event{
+      padding:14px;
+      border-radius:14px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:12px;
+      align-items:start;
     }
 
-    .timeline-row {
-      display: grid;
-      grid-template-columns: 86px 1fr;
-      gap: 12px;
-      align-items: start;
-      padding: 14px;
-      border-radius: 14px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,.06);
+    .event-dot{
+      width:10px;height:10px;border-radius:999px;
+      background:var(--green);
+      margin-top:6px;
+      box-shadow:0 0 0 6px rgba(65,198,154,.10);
     }
 
-    .timeline-row .time {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
-      line-height: 1.45;
+    .event.warn .event-dot{
+      background:var(--yellow);
+      box-shadow:0 0 0 6px rgba(217,175,100,.10);
     }
 
-    .timeline-row strong {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 3px;
+    .event.bad .event-dot{
+      background:var(--red);
+      box-shadow:0 0 0 6px rgba(215,122,122,.10);
     }
 
-    .timeline-row span {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
+    .event strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:4px;
     }
 
-    .chart-wrap {
-      position: relative;
-      width: 100%;
-      height: 240px;
+    .event p{
+      margin:0;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.55;
     }
 
-    .detail-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
+    .event time{
+      font-size:12px;
+      color:var(--soft);
+      white-space:nowrap;
     }
 
-    .detail-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,.06);
+    th,td{
+      text-align:left;
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:13px;
     }
 
-    .detail-row span {
-      font-size: 13px;
-      color: var(--muted);
+    th{
+      color:var(--soft);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      font-weight:700;
     }
 
-    .detail-row strong {
-      font-size: 14px;
-      color: #edf3f9;
-      font-variant-numeric: tabular-nums lining-nums;
+    td{
+      color:var(--muted);
     }
 
-    .channel-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 14px;
+    td strong{
+      color:var(--text);
+      font-size:14px;
     }
 
-    .channel-box {
-      padding: 18px 14px;
-      border-radius: 16px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,.06);
-      text-align: center;
+    .money{
+      font-variant-numeric:tabular-nums lining-nums;
+      color:#eaf2fa;
+      font-weight:700;
     }
 
-    .channel-box .value {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: -.03em;
-      margin: 0;
+    .quick-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
     }
 
-    .channel-box .label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
+    .quick-card{
+      padding:16px;
+      border-radius:16px;
+      background:var(--panel-2);
+      border:1px solid rgba(255,255,255,.06);
     }
 
-    .rule-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
+    .quick-card small{
+      display:block;
+      margin-bottom:8px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--soft);
     }
 
-    .rule-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      padding: 14px;
-      border-radius: 14px;
-      background: var(--surface-2);
-      border: 1px solid rgba(255,255,255,.06);
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.55;
+    .quick-card strong{
+      display:block;
+      font-size:16px;
+      margin-bottom:6px;
     }
 
-    .rule-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background: rgba(97,193,143,.14);
-      color: #bfe9d0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 800;
-      flex: 0 0 auto;
-      margin-top: 1px;
+    .quick-card p{
+      margin:0;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.55;
     }
 
-    .cta-card {
-      padding: 22px;
-      border-radius: 22px;
-      background:
-        radial-gradient(circle at top right, rgba(23,107,99,.15), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
-        var(--surface);
-      border: 1px solid var(--line);
-      text-align: center;
+    .floating{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:30;
+      box-shadow:var(--shadow);
     }
 
-    .floating-whats {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 40;
-      box-shadow: var(--shadow);
+    .mobile-menu{
+      display:none;
     }
 
-    @media (max-width: 1120px) {
-      .shell {
-        grid-template-columns: 1fr;
+    @media (max-width:1180px){
+      .layout{grid-template-columns:1fr}
+      .sidebar{
+        display:none;
+        position:fixed;
+        left:0;top:0;
+        width:280px;
+        box-shadow:var(--shadow);
       }
-
-      .sidebar {
-        display: none;
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 280px;
-        z-index: 50;
-        box-shadow: var(--shadow);
+      .sidebar.open{display:block}
+      .mobile-menu{
+        display:inline-flex;
+        width:42px;height:42px;
+        align-items:center;justify-content:center;
+        border-radius:12px;
+        border:1px solid var(--line);
+        background:rgba(255,255,255,.03);
+        color:#fff;
       }
-
-      .sidebar.open { display: block; }
-
-      .mobile-menu {
-        display: inline-flex;
-        width: 42px;
-        height: 42px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,.03);
-        color: #fff;
-      }
-
       .hero,
-      .grid-kpis,
-      .grid-main,
-      .grid-bottom,
-      .channel-grid {
-        grid-template-columns: 1fr;
+      .kpi-grid,
+      .main-grid,
+      .bottom-grid,
+      .quick-grid{
+        grid-template-columns:1fr;
       }
     }
 
-    @media (max-width: 720px) {
-      .topbar-inner, .main {
-        width: min(calc(100% - 20px), var(--container));
+    @media (max-width:760px){
+      .topbar-inner,.main{
+        width:min(calc(100% - 20px),var(--container));
       }
 
-      .topbar-inner {
-        flex-direction: column;
-        align-items: flex-start;
+      .topbar-inner{
+        flex-direction:column;
+        align-items:flex-start;
       }
 
-      .hero-panel, .hero-aside, .card, .cta-card {
-        padding: 18px;
+      .hero,.kpi,.panel-body{
+        padding:16px;
       }
 
-      .hero-head {
-        flex-direction: column;
-      }
-
-      .timeline-row {
-        grid-template-columns: 1fr;
-      }
-
-      .chart-wrap {
-        height: 220px;
+      .list-row,
+      .event{
+        grid-template-columns:1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="brand-mark">CLI</div>
+        <div class="logo">CLI</div>
         <div>
-          <p class="kicker">Operação com IA</p>
-          <p class="title">Visão do cliente</p>
+          <small>Operação com IA</small>
+          <strong>Visão do cliente</strong>
         </div>
       </div>
 
-      <p class="nav-group-title">Painéis</p>
+      <p class="section-label">Painéis</p>
 
       <a href="/" class="nav-link">
         <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -706,7 +697,7 @@
         Área do Cliente
       </a>
 
-      <div class="sidebar-box">
+      <div class="sidebar-card">
         <p>Visão individual do cliente, com foco em negociação, histórico de contato, andamento do acordo e preservação do relacionamento comercial.</p>
       </div>
     </aside>
@@ -714,7 +705,7 @@
     <div class="content">
       <header class="topbar">
         <div class="topbar-inner">
-          <div class="top-left">
+          <div class="top-info">
             <button class="mobile-menu" onclick="toggleSidebar()" aria-label="Abrir menu">
               <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/>
@@ -722,30 +713,307 @@
             </button>
 
             <div>
-              <p class="eyebrow">Perfil do Cliente • CDL Belo Horizonte</p>
-              <p class="top-title"><strong>Visão individual da negociação.</strong> Histórico de interações, parcelas, canais utilizados e andamento do acordo com foco em recuperação e respeito ao cliente.</p>
+              <p class="eyebrow">Perfil do cliente • Moda Centro</p>
+              <p><strong>Visão individual da negociação.</strong> Histórico de interações, parcelas, canais utilizados e andamento do acordo com foco em recuperação e respeito ao cliente.</p>
             </div>
           </div>
 
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="btn-secondary" href="/painel-lojista">Painel Lojista</a>
-            <a class="btn-secondary" href="/area-cliente">Área do Cliente</a>
-            <a class="btn-primary" href="https://wa.me/5548984829654?text=Quero%20apresentar%20a%20vis%C3%A3o%20do%20cliente%20da%20opera%C3%A7%C3%A3o%20CDL%20BH" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
+            <a class="btn-outline" href="/painel-lojista">Painel Lojista</a>
+            <a class="btn" href="https://wa.me/5548984829654?text=Quero%20apresentar%20a%20vis%C3%A3o%20do%20cliente%20da%20opera%C3%A7%C3%A3o%20CDL" target="_blank" rel="noopener noreferrer">Falar no WhatsApp</a>
           </div>
         </div>
       </header>
 
       <main class="main">
-        <section class="hero">
-          <div class="hero-panel">
-            <div class="hero-head">
-              <div class="avatar">MS</div>
-              <div>
-                <p class="eyebrow">CLIENTE ACOMPANHADO PELA OPERAÇÃO</p>
-                <h1>Maria da Silva</h1>
-                <p>CPF final 123-09 • Cliente recorrente da loja Moda Centro • Negociação conduzida com abordagem cordial e régua ativa de cobrança.</p>
+        <section class="panel hero">
+          <div>
+            <p class="eyebrow">Cliente acompanhado pela operação</p>
+            <h1>Maria da Silva</h1>
+            <p>CPF final 123-09 • Cliente recorrente da loja Moda Centro • Negociação conduzida com abordagem cordial e régua ativa de cobrança.</p>
 
-                <div class="tags">
-                  <span class="tag good">Acordo em dia</span>
-                  <span class="tag">Cliente recorrente</span>
-                  
+            <div class="hero-badges">
+              <span class="badge good">Acordo em dia</span>
+              <span class="badge">Cliente recorrente</span>
+              <span class="badge warn">Próxima parcela em 4 dias</span>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="mini-panel">
+              <small>Saldo negociado</small>
+              <strong>R$ 1.280</strong>
+              <span>Valor total incluído no acordo atual com condições já aprovadas.</span>
+            </div>
+
+            <div class="mini-panel">
+              <small>Entrada confirmada</small>
+              <strong>R$ 320</strong>
+              <span>Pagamento inicial recebido e conciliado pela operação.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="kpi-grid">
+          <article class="panel kpi">
+            <p class="label">Status do acordo</p>
+            <p class="value">Ativo</p>
+            <p class="sub good">Sem atraso até o momento</p>
+          </article>
+
+          <article class="panel kpi">
+            <p class="label">Parcelas restantes</p>
+            <p class="value">3</p>
+            <p class="sub">Próximo vencimento em 4 dias</p>
+          </article>
+
+          <article class="panel kpi">
+            <p class="label">Canal principal</p>
+            <p class="value">WhatsApp</p>
+            <p class="sub">Maior taxa de resposta do cliente</p>
+          </article>
+
+          <article class="panel kpi">
+            <p class="label">Risco atual</p>
+            <p class="value">Baixo</p>
+            <p class="sub good">Cliente engajado na negociação</p>
+          </article>
+        </section>
+
+        <section class="main-grid">
+          <article class="panel panel-body">
+            <div class="head">
+              <div>
+                <h2>Linha do tempo da negociação</h2>
+                <p>Registro das principais interações e eventos do caso.</p>
+              </div>
+              <span class="pill">Caso ativo</span>
+            </div>
+
+            <div class="timeline">
+              <div class="event">
+                <div class="event-dot"></div>
+                <div>
+                  <strong>Acordo aceito pelo cliente</strong>
+                  <p>Cliente aprovou proposta com entrada e parcelamento em 4 vezes, mantendo comunicação cordial e objetiva.</p>
+                </div>
+                <time>Hoje • 10:14</time>
+              </div>
+
+              <div class="event">
+                <div class="event-dot"></div>
+                <div>
+                  <strong>Entrada identificada</strong>
+                  <p>Pagamento inicial processado com sucesso e baixa financeira registrada na operação.</p>
+                </div>
+                <time>Hoje • 11:02</time>
+              </div>
+
+              <div class="event warn">
+                <div class="event-dot"></div>
+                <div>
+                  <strong>Lembrete automático agendado</strong>
+                  <p>Mensagem preventiva programada para 48 horas antes da próxima parcela, com link direto para pagamento.</p>
+                </div>
+                <time>Amanhã • 09:00</time>
+              </div>
+
+              <div class="event">
+                <div class="event-dot"></div>
+                <div>
+                  <strong>Cliente acessou o portal</strong>
+                  <p>Consulta realizada na Área do Cliente para revisar valores, vencimentos e opções de pagamento.</p>
+                </div>
+                <time>Ontem • 18:47</time>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel panel-body">
+            <div class="head">
+              <div>
+                <h2>Leitura operacional do caso</h2>
+                <p>O que a equipe e o lojista precisam saber para preservar a recuperação.</p>
+              </div>
+            </div>
+
+            <div class="list">
+              <div class="list-row">
+                <div>
+                  <strong>Cliente responde bem por WhatsApp</strong>
+                  <span>As interações recentes tiveram resposta rápida e bom tom de conversa.</span>
+                </div>
+                <span class="status good">Canal ideal</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Histórico positivo com a loja</strong>
+                  <span>Cliente recorrente, com vínculo comercial preservado e boa chance de recompra futura.</span>
+                </div>
+                <span class="status info">Relacionamento</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Próxima parcela merece atenção</strong>
+                  <span>Os próximos 4 dias são decisivos para manter o acordo saudável.</span>
+                </div>
+                <span class="status warn">Acompanhar</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Sem necessidade de escalonamento</strong>
+                  <span>No cenário atual não há sinal de ruptura, atrito ou necessidade de endurecer a abordagem.</span>
+                </div>
+                <span class="status good">Estável</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="bottom-grid">
+          <article class="panel panel-body">
+            <div class="head">
+              <div>
+                <h2>Parcelas do acordo</h2>
+                <p>Controle financeiro do que já foi pago e do que ainda está em aberto.</p>
+              </div>
+              <span class="pill">4 parcelas</span>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Parcela</th>
+                  <th>Vencimento</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Entrada</strong></td>
+                  <td>02/04/2026</td>
+                  <td class="money">R$ 320</td>
+                  <td><span class="status good">Paga</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Parcela 2</strong></td>
+                  <td>06/04/2026</td>
+                  <td class="money">R$ 320</td>
+                  <td><span class="status warn">A vencer</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Parcela 3</strong></td>
+                  <td>13/04/2026</td>
+                  <td class="money">R$ 320</td>
+                  <td><span class="status">Programada</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Parcela 4</strong></td>
+                  <td>20/04/2026</td>
+                  <td class="money">R$ 320</td>
+                  <td><span class="status">Programada</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="panel panel-body">
+            <div class="head">
+              <div>
+                <h2>Informações importantes</h2>
+                <p>Resumo objetivo para decisão e acompanhamento do caso.</p>
+              </div>
+            </div>
+
+            <div class="list">
+              <div class="list-row">
+                <div>
+                  <strong>Último contato respondido</strong>
+                  <span>Cliente respondeu a última mensagem e confirmou entendimento das condições.</span>
+                </div>
+                <span class="status good">Respondido</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Portal já acessado</strong>
+                  <span>O cliente utilizou a Área do Cliente para validar a negociação e visualizar o acordo.</span>
+                </div>
+                <span class="status good">Acessado</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Probabilidade de manutenção</strong>
+                  <span>Com base no comportamento atual, a chance de manter o acordo é favorável.</span>
+                </div>
+                <span class="status info">Boa</span>
+              </div>
+
+              <div class="list-row">
+                <div>
+                  <strong>Próxima ação recomendada</strong>
+                  <span>Enviar lembrete leve antes do vencimento e manter o canal digital como principal.</span>
+                </div>
+                <span class="status warn">Agendada</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel panel-body">
+          <div class="head">
+            <div>
+              <h2>Acessos rápidos</h2>
+              <p>Navegação entre os ambientes da operação relacionados a este caso.</p>
+            </div>
+          </div>
+
+          <div class="quick-grid">
+            <div class="quick-card">
+              <small>Painel do lojista</small>
+              <strong>Voltar para a carteira</strong>
+              <p>Acompanhe resultados gerais, oportunidades e risco da carteira completa.</p>
+              <div style="margin-top:14px;">
+                <a class="btn-outline" href="/painel-lojista">Abrir painel</a>
+              </div>
+            </div>
+
+            <div class="quick-card">
+              <small>Área do cliente</small>
+              <strong>Portal seguro</strong>
+              <p>Visualize a experiência do cliente com parcelas, acordo e pagamento.</p>
+              <div style="margin-top:14px;">
+                <a class="btn-outline" href="/area-cliente">Abrir área</a>
+              </div>
+            </div>
+
+            <div class="quick-card">
+              <small>Contato direto</small>
+              <strong>Acionar suporte</strong>
+              <p>Fale com a operação para revisar abordagem, prazo ou condução do caso.</p>
+              <div style="margin-top:14px;">
+                <a class="btn" href="https://wa.me/5548984829654?text=Quero%20revisar%20o%20caso%20do%20cliente%20Maria%20da%20Silva" target="_blank" rel="noopener noreferrer">Falar agora</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <a class="btn floating" href="https://wa.me/5548984829654?text=Quero%20revisar%20o%20andamento%20do%20cliente%20acompanhado%20pela%20opera%C3%A7%C3%A3o" target="_blank" rel="noopener noreferrer">
+    WhatsApp
+  </a>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
